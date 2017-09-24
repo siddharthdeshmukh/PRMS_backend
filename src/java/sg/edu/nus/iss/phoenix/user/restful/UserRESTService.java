@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sg.edu.nus.iss.phoenix.radioprogram.restful;
+package sg.edu.nus.iss.phoenix.user.restful;
 
 
 import java.io.UnsupportedEncodingException;
@@ -21,28 +21,28 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
-import sg.edu.nus.iss.phoenix.radioprogram.service.ProgramService;
+import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import sg.edu.nus.iss.phoenix.user.service.UserService;
 
 /**
  * REST Web Service
  *
  * @author User
  */
-@Path("radioprogram")
+@Path("user")
 @RequestScoped
-public class ProgramRESTService {
+public class UserRESTService {
 
     @Context
     private UriInfo context;
     
-    private ProgramService service;
+    private UserService service;
 
     /**
      * Creates a new instance of RadioProgramRESTService
      */
-    public ProgramRESTService() {
-        service = new ProgramService();
+    public UserRESTService() {
+        service = new UserService();
     }
 
     /**
@@ -51,26 +51,18 @@ public class ProgramRESTService {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public RadioProgram getRadioProgram() {
+    public User getUser() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public RadioPrograms getAllRadioPrograms() {
-        ArrayList<RadioProgram> rplist = service.findAllRP();
-        RadioPrograms rpsList = new RadioPrograms();
-        rpsList.setRpList(new ArrayList<RadioProgram>());
-        
-        for (int i = 0; i < rplist.size(); i++) {
-            rpsList.getRpList().add(
-                new RadioProgram(rplist.get(i).getName(), 
-                    rplist.get(i).getDescription(), 
-                    rplist.get(i).getTypicalDuration()));
-        }
-
-        return rpsList;
+    public UserList getAllUser() {
+        ArrayList<User> userListFromService = service.findAllUser();
+        UserList userList = new UserList();
+        userList.setUserList(userListFromService);
+        return userList;
     }
     
     /**
@@ -80,8 +72,8 @@ public class ProgramRESTService {
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateRadioProgram(RadioProgram rp) {
-        service.processModify(rp);
+    public void updateUser(User user) {
+        service.processModify(user);
     }
     
     /**
@@ -91,8 +83,8 @@ public class ProgramRESTService {
     @PUT
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createRadioProgram(RadioProgram rp) {
-        service.processCreate(rp);
+    public void createUser(User user) {
+        service.processCreate(user);
     }
    
     /**
@@ -100,9 +92,9 @@ public class ProgramRESTService {
      * @param name name of the resource
      */
     @DELETE
-    @Path("/delete/{rpname}")
+    @Path("/delete/{username}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteRadioProgram(@PathParam("rpname") String name) {
+    public void deleteUser(@PathParam("username") String name) {
         String name2;
         try { 
             name2 = URLDecoder.decode(name, "UTF-8");
