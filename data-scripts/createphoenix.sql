@@ -114,8 +114,8 @@ DROP TABLE IF EXISTS `phoenix`.`program-slot` ;
 
 CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
   `duration` TIME NOT NULL ,
-  `dateOfProgram` DATETIME NOT NULL ,
-  `startTime` DATETIME NULL ,
+  `dateOfProgram` DATE NOT NULL ,
+  `startTime` TIME NOT NULL ,
   `program-name` VARCHAR(45) NULL ,
   PRIMARY KEY (`duration`, `dateOfProgram`) ,
   CONSTRAINT `name`
