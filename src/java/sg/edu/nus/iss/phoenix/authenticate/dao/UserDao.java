@@ -5,6 +5,8 @@ import java.util.List;
 
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.user.entity.Presenter;
+import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
 public interface UserDao {
 
@@ -160,5 +162,20 @@ public interface UserDao {
 			throws SQLException;
 
 	public abstract User searchMatching(String uid)
+			throws SQLException;
+        /**
+         * loadAllPresenters-method to retrieve all Users with role Presenter present in User table
+         * @return
+         * @throws SQLException 
+         */
+        public abstract List<Presenter> loadAllPresenters()
+			throws SQLException;
+        
+        /**
+         * loadAllProducers-method to retrieve all Users with role Producer present in User table
+         * @return
+         * @throws SQLException 
+         */
+        public abstract List<Producer> loadAllProducers()
 			throws SQLException;
 }

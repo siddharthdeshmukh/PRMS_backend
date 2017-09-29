@@ -15,6 +15,8 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.user.entity.Presenter;
+import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
 /**
  * User Data Access Object (DAO). This class contains all database handling that
@@ -466,5 +468,46 @@ public class UserDaoImpl implements UserDao {
         
         return roleBuffer.toString();
  
+    }
+
+    @Override
+    public List<Presenter> loadAllPresenters() throws SQLException {
+
+		String sql = "SELECT id,name FROM user WHERE role LIKE '%presenter%' ORDER BY id ASC ";
+                ArrayList<Presenter> searchResults = new ArrayList<>();
+                PreparedStatement stmt = this.connection.prepareStatement(sql);
+		try (ResultSet result = stmt.executeQuery()) {
+                    while (result.next()) {
+                        Presenter temp = new Presenter();
+                        temp.setId(result.getString("id"));
+                        temp.setName(result.getString("name"));
+                        searchResults.add(temp);
+                    }
+                } finally {
+                    if (stmt != null)
+			stmt.close();
+		}
+		return searchResults;
+	
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Producer> loadAllProducers() throws SQLException {
+        		String sql = "SELECT id,name FROM user WHERE role LIKE '%producer%' ORDER BY id ASC ";
+                ArrayList<Producer> searchResults = new ArrayList<>();
+                PreparedStatement stmt = this.connection.prepareStatement(sql);
+		try (ResultSet result = stmt.executeQuery()) {
+                    while (result.next()) {
+                        Producer temp = new Producer();
+                        temp.setId(result.getString("id"));
+                        temp.setName(result.getString("name"));
+                        searchResults.add(temp);
+                    }
+                } finally {
+                    if (stmt != null)
+			stmt.close();
+		}
+		return searchResults;
     }
 }

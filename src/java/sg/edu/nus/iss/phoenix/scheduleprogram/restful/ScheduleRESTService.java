@@ -64,7 +64,7 @@ public class ScheduleRESTService {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<ProgramSlot> getAllProgramSlot() {
+    public ScheduleProgram getAllProgramSlot() {
         ArrayList<ProgramSlot> SpList = service.findAllSP();
         ScheduleProgram spList = new ScheduleProgram();
         spList.setSpList(new ArrayList<ProgramSlot>());
@@ -74,10 +74,11 @@ public class ScheduleRESTService {
                 new ProgramSlot(SpList.get(i).getDuration(),
                         SpList.get(i).getDateOfProgram(),
                         SpList.get(i).getStarttime(),
-                        SpList.get(i).getProgamName()));
-                   
+                        SpList.get(i).getProgamName(),
+                        SpList.get(i).getPresenter(),
+                        SpList.get(i).getProducer()));
         }
-
-        return SpList;
+           System.out.println(spList.getSpList().get(0).getPresenter()); 
+        return spList;
     }
 }

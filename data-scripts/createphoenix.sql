@@ -113,23 +113,34 @@ CREATE INDEX `id_annual_schedule` ON `phoenix`.`annual-schedule` (`assingedBy` A
 DROP TABLE IF EXISTS `phoenix`.`program-slot` ;
 
 CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
-  `duration` TIME NOT NULL ,
-  `dateOfProgram` DATETIME NOT NULL ,
-  `startTime` DATETIME NULL ,
-  `program-name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`duration`, `dateOfProgram`) ,
-  CONSTRAINT `name`
-    FOREIGN KEY (`program-name` )
-    REFERENCES `phoenix`.`radio-program` (`name` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  `duration` time NOT NULL,
+  `dateOfProgram` date NOT NULL,
+  `startTime` time NOT NULL,
+  `program-name` varchar(45) NOT NULL,
+  `presenter` varchar(45) DEFAULT NULL,
+  `producer` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`dateOfProgram`,`program-name`,`startTime`),
+  KEY `name_program_slot` (`program-name`),
+  CONSTRAINT `name` FOREIGN KEY (`program-name`) REFERENCES `radio-program` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
 CREATE INDEX `name_program_slot` ON `phoenix`.`program-slot` (`program-name` ASC) ;
 
 CREATE UNIQUE INDEX `dateOfProgram_UNIQUE` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;
 
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`program-slot`
+-- -----------------------------------------------------
 
+insert into `phoenix`.`program-slot` values('00:30:00', '2017-09-28','09:00:00',"dance floor", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','10:00:00',"your choice", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','11:00:00',"top 10", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','13:00:00',"short news", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','14:00:00',"ppk", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','15:00:00',"opinions", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','16:00:00',"news", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','17:00:00',"charity", "Siddharth", "Ritesh");
+insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-30','10:00:00',"charity", "Siddharth", "Ritesh");
 -- -----------------------------------------------------
 -- Table `phoenix`.`weekly-schedule`
 -- -----------------------------------------------------

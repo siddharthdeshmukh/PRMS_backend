@@ -77,7 +77,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		List<ProgramSlot> searchResults = listQuery(connection
 				.prepareStatement(sql));
 		closeConnection();
-		System.out.println("record size"+searchResults.size());
+		System.out.println("record size "+searchResults.get(4).getPresenter());
 		return searchResults;
 	}
         
@@ -190,7 +190,8 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 				temp.setDateOfProgram(result.getDate("dateOfProgram"));
 				temp.setStarttime(result.getTime("startTime"));
                                 temp.setDuration(result.getTime("duration"));
-
+                                temp.setPresenter(result.getString("presenter"));
+                                temp.setProducer(result.getString("producer"));
 				searchResults.add(temp);
 			}
 
