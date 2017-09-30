@@ -73,12 +73,11 @@ public class ScheduleRESTService {
             spList.getSpList().add(
                 new ProgramSlot(SpList.get(i).getDuration(),
                         SpList.get(i).getDateOfProgram(),
-                        SpList.get(i).getStarttime(),
-                        SpList.get(i).getProgamName(),
+                        SpList.get(i).getStartTime(),
+                        SpList.get(i).getRadioProgram(),
                         SpList.get(i).getPresenter(),
                         SpList.get(i).getProducer()));
         }
-           System.out.println(spList.getSpList().get(0).getPresenter()); 
         return spList;
     }
 }

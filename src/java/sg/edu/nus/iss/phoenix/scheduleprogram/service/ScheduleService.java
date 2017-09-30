@@ -88,7 +88,7 @@ public class ScheduleService {
          Date startDate = new Date(weeklySch.getStartDate().getTime());
          List<ProgramSlot> programSlotForWeek = spdao.loadAllProgramSlotForWeek(startDate);
          for(ProgramSlot ps:programSlotForWeek){
-            if(programSlot.getDateOfProgram().compareTo(ps.getDateOfProgram())==0 && programSlot.getStarttime().compareTo(ps.getStarttime())==0){
+            if(programSlot.getDateOfProgram().compareTo(ps.getDateOfProgram())==0 && programSlot.getStartTime().compareTo(ps.getStartTime())==0){
                 // Date of Program and Start Time already Present for the Week, throw OverlapException
                 throw new OverLapException("Program Slot already assigned to Other Program");
             } 
@@ -98,7 +98,7 @@ public class ScheduleService {
         
         protected String getWeekNumber(ProgramSlot ps){
             Calendar cal = Calendar.getInstance();
-        cal.setTime(ps.getStarttime());
+        cal.setTime(ps.getStartTime());
         int weekNo = cal.get(Calendar.WEEK_OF_YEAR);
         return Integer.toString(weekNo);
         }
