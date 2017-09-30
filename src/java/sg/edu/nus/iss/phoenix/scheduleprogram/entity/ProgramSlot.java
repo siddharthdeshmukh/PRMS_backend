@@ -14,17 +14,17 @@ import java.util.Date;
  */
 public class ProgramSlot implements Cloneable, Serializable{
     
-  private Time Duration;
-  private Date DateOfProgram;
-  private Date Starttime;
+  private Time duration;
+  private Date dateOfProgram;
+  private Date startTime;
   private String progamName;
   private String presenter;
   private String producer;
 
     public ProgramSlot(Time Duration, Date DateOfProgram, Date Starttime, String progamName, String presenter, String producer) {
-        this.Duration = Duration;
-        this.DateOfProgram = DateOfProgram;
-        this.Starttime = Starttime;
+        this.duration = Duration;
+        this.dateOfProgram = DateOfProgram;
+        this.startTime = Starttime;
         this.progamName = progamName;
         this.presenter = presenter;
         this.producer = producer;
@@ -40,35 +40,35 @@ public class ProgramSlot implements Cloneable, Serializable{
  
    public void setAll(Time Duration, Date DateOfProgram, Date Starttime, String progamName, String presenter, String producer) {
           this.progamName = progamName;
-          this.Starttime = Starttime;
-          this.DateOfProgram = DateOfProgram;
-          this.Duration=Duration;
+          this.startTime = Starttime;
+          this.dateOfProgram = DateOfProgram;
+          this.duration=Duration;
           this.presenter = presenter;
           this.producer = producer;
     }
 
     public Time getDuration() {
-        return Duration;
+        return duration;
     }
 
     public void setDuration(Time Duration) {
-        this.Duration = Duration;
+        this.duration = Duration;
     }
 
     public Date getDateOfProgram() {
-        return DateOfProgram;
+        return dateOfProgram;
     }
 
     public void setDateOfProgram(Date DateOfProgram) {
-        this.DateOfProgram = DateOfProgram;
+        this.dateOfProgram = DateOfProgram;
     }
 
     public Date getStarttime() {
-        return Starttime;
+        return startTime;
     }
 
     public void setStarttime(Date Starttime) {
-        this.Starttime = Starttime;
+        this.startTime = Starttime;
     }
 
 

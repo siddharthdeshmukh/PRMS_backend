@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/NUS%20coursework/Sem1%20(July%20to%20Nov)/Software%20Analysis%20Design/Lecture%20Notes/Case%20Study/PRMS/CA/Implementation/PRMS_Backend/PRMS/src/java/sg/edu/nus/iss/phoenix/user/restful/UserRESTService.java</file>
-            <file>file:/F:/NUS%20coursework/Sem1%20(July%20to%20Nov)/Software%20Analysis%20Design/Lecture%20Notes/Case%20Study/PRMS/CA/Implementation/PRMS_Backend/PRMS/src/java/sg/edu/nus/iss/phoenix/authenticate/dao/impl/UserDaoImpl.java</file>
+            <file>file:/F:/NUS%20coursework/Sem1%20(July%20to%20Nov)/Software%20Analysis%20Design/Lecture%20Notes/Case%20Study/PRMS/CA/Implementation/PRMS_Backend/PRMS/src/java/sg/edu/nus/iss/phoenix/scheduleprogram/entity/ProgramSlot.java</file>
+            <file>file:/F:/NUS%20coursework/Sem1%20(July%20to%20Nov)/Software%20Analysis%20Design/Lecture%20Notes/Case%20Study/PRMS/CA/Implementation/PRMS_Backend/PRMS/src/java/sg/edu/nus/iss/phoenix/scheduleprogram/entity/WeeklySchedule.java</file>
+            <file>file:/F:/NUS%20coursework/Sem1%20(July%20to%20Nov)/Software%20Analysis%20Design/Lecture%20Notes/Case%20Study/PRMS/CA/Implementation/PRMS_Backend/PRMS/src/java/sg/edu/nus/iss/phoenix/radioprogram/entity/RadioProgram.java</file>
+            <file>file:/F:/NUS%20coursework/Sem1%20(July%20to%20Nov)/Software%20Analysis%20Design/Lecture%20Notes/Case%20Study/PRMS/CA/Implementation/PRMS_Backend/PRMS/src/java/sg/edu/nus/iss/phoenix/scheduleprogram/restful/ScheduleRESTService.java</file>
         </group>
     </open-files>
 </project-private>

@@ -35,6 +35,7 @@ public interface ScheduleProgramDAO {
     public abstract void deleteAll(Connection conn) throws SQLException;
     public abstract List<ProgramSlot> searchMatching(ProgramSlot valueObject)
 			throws SQLException;
+    public abstract List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException;
     
 }
 

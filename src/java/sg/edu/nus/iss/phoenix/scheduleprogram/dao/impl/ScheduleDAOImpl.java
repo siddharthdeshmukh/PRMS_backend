@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
@@ -77,7 +78,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		List<ProgramSlot> searchResults = listQuery(connection
 				.prepareStatement(sql));
 		closeConnection();
-		System.out.println("record size "+searchResults.get(4).getPresenter());
+		
 		return searchResults;
 	}
         
@@ -89,12 +90,14 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
-			sql = "INSERT INTO `program-slot` (`program-name`, `dateOfProgram`, `startTime`,`duration` ) VALUES (?,?,?,?); ";
+			sql = "INSERT INTO `program-slot` (`program-name`, `dateOfProgram`, `startTime`,`duration`,`presenter`, `producer` ) VALUES (?,?,?,?,?,?); ";
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, valueObject.getProgamName());
 			stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
 			stmt.setDate(3, new java.sql.Date(valueObject.getStarttime().getTime()));
                         stmt.setTime(4, valueObject.getDuration());
+                        stmt.setString(5, valueObject.getPresenter());
+                        stmt.setString(6, valueObject.getProducer());
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount != 1) {
 				// System.out.println("PrimaryKey Error when updating DB!");
@@ -244,6 +247,23 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 
     @Override
     public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
+                Calendar cal =Calendar.getInstance();
+                cal.setTime(weekStartDate);
+                cal.add(Calendar.DAY_OF_YEAR, 7);
+                
+                Date weekEndDate= new Date(cal.getTime().getTime());
+                openConnection();
+		String sql = "SELECT * FROM `program-slot` WHERE(dateOfProgrambetween ? and ? ) ORDER BY `program-name` ASC; ";
+		PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setDate(1, weekStartDate);
+                stmt.setDate(2, weekEndDate);
+                List<ProgramSlot> searchResults = listQuery(stmt);
+		closeConnection();
+		return searchResults;
     }
 }

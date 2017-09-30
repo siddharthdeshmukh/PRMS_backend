@@ -8,6 +8,7 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.RoleDao;
 import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.ScheduleProgramDAO;
+import sg.edu.nus.iss.phoenix.scheduleprogram.dao.WeeklyScheduleDAO;
 
 /**
  *
@@ -21,4 +22,5 @@ public interface DAOFactory {
 
 	UserDao getUserDAO();
 	 ScheduleProgramDAO getSpdao();
+        WeeklyScheduleDAO getWeeklyScheduleDAO() ;
 }
