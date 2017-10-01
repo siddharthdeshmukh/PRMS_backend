@@ -34,5 +34,5 @@ public interface WeeklyScheduleDAO {
      * @throws java.sql.SQLException 
 	 */
     public abstract WeeklySchedule getWeeklySchedule(WeeklySchedule valueObject) throws NotFoundException,SQLException;
-    
+    public abstract void updateUser(WeeklySchedule valueObject) throws NotFoundException,SQLException;
 }

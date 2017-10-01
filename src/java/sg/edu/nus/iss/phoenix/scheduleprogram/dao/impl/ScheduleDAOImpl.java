@@ -34,6 +34,19 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		return new ProgramSlot();
 	}
         
+    @Override
+	public ProgramSlot getObject(String name, Date Progdate,int duration) throws NotFoundException,
+			SQLException {
+    
+		ProgramSlot valueObject = createValueObject();
+		RadioProgram rp = new RadioProgram();
+                valueObject.setRadioProgram(rp);
+                valueObject.getRadioProgram().setName(name);
+                valueObject.setDuration(duration);
+                valueObject.setDateOfProgram(Progdate);
+		load(valueObject);
+		return valueObject;
+	}
     
         @Override
 	public void load(ProgramSlot valueObject) throws NotFoundException,
@@ -229,7 +242,60 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 	}
 
     @Override
-    public int delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
+    public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll(Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    @Override
+    public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
+                Calendar cal =Calendar.getInstance();
+                cal.setTime(weekStartDate);
+                cal.add(Calendar.DAY_OF_YEAR, 7);
+                
+                Date weekEndDate= new Date(cal.getTime().getTime());
+                openConnection();
+		String sql = "SELECT * FROM `program-slot` WHERE(dateOfProgrambetween ? and ? ) ORDER BY `program-name` ASC; ";
+		PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setDate(1, weekStartDate);
+                stmt.setDate(2, weekEndDate);
+                List<ProgramSlot> searchResults = listQuery(stmt);
+		closeConnection();
+		return searchResults;
+    }
+
+    @Override
+    public void updatePresenterProducer(ProgramSlot valueObject) throws SQLException {
+        String presenterSql = "UPDATE `program-slot` SET `presenter`= NULL WHERE (`presenter` = ?); ";
+	PreparedStatement stmtPresenter = null;
+        String producerSql = "UPDATE `program-slot` SET `producer`= NULL WHERE (`producer` = ?); ";
+	PreparedStatement stmtProducer = null;
+		openConnection();
+		try {
+			stmtPresenter = connection.prepareStatement(presenterSql);
+			stmtProducer = connection.prepareStatement(producerSql);
+			stmtPresenter.setString(1, valueObject.getPresenter());
+                        stmtProducer.setString(1, valueObject.getProducer());
+
+			int rowcount = databaseUpdate(stmtPresenter);
+                        int rowcount_producer = databaseUpdate(stmtProducer);
+			
+		} finally {
+			if (stmtPresenter != null)
+                            stmtPresenter.close();
+                        if(stmtProducer!=null)
+                            stmtProducer.close();
+			closeConnection();
+		}
+    }
+
+    @Override
+    public void delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
         String sql = "DELETE FROM `program-slot` WHERE (`startTime`=? AND `dateOfProgram`=?  AND `program-name` = ?); ";
 		PreparedStatement stmt = null;
 		openConnection();
@@ -250,50 +316,11 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 				throw new SQLException(
 						"PrimaryKey Error when deleting program slot from DB! (Many objects were affected!)");
 			}
-                        return rowcount;
+      
 		} finally {
 			if (stmt != null)
 				stmt.close();
                                 closeConnection();
 		}
-    }
-
-    @Override
-    public void deleteAll(Connection conn) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
-                Calendar cal =Calendar.getInstance();
-                cal.setTime(weekStartDate);
-                cal.add(Calendar.DAY_OF_YEAR, 7);
-                
-                Date weekEndDate= new Date(cal.getTime().getTime());
-                openConnection();
-		String sql = "SELECT * FROM `program-slot` WHERE(dateOfProgrambetween ? and ? ) ORDER BY `program-name` ASC; ";
-		PreparedStatement stmt = connection.prepareStatement(sql);
-                stmt.setDate(1, weekStartDate);
-                stmt.setDate(2, weekEndDate);
-                List<ProgramSlot> searchResults = listQuery(stmt);
-		closeConnection();
-		return searchResults;
-    }
-
-    @Override
-    public ProgramSlot getObject(String name, Date Progdate, Time duration) throws NotFoundException, SQLException {
-        ProgramSlot valueObject = createValueObject();
-		RadioProgram rp = new RadioProgram();
-                valueObject.setRadioProgram(rp);
-                valueObject.getRadioProgram().setName(name);
-                //valueObject.setDuration(duration);
-                valueObject.setDateOfProgram(Progdate);
-		load(valueObject);
-		return valueObject;
     }
 }

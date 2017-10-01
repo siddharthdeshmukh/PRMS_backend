@@ -114,4 +114,30 @@ Connection connection;
 	public WeeklySchedule createValueObject() {
 		return new WeeklySchedule();
 	}
+
+    @Override
+    public void updateUser(WeeklySchedule valueObject) throws NotFoundException, SQLException {
+       String sql = "UPDATE `weekly-schedule` SET `assignedBy`= NULL WHERE (`assignedBy` = ?); ";
+		PreparedStatement stmt = null;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, valueObject.getAssignedBy());
+
+			int rowcount = databaseUpdate(stmt);
+			
+		} finally {
+			if (stmt != null)
+				stmt.close();
+			closeConnection();
+		}
+    }
+    
+    protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
+
+		int result = stmt.executeUpdate();
+
+		return result;
+	}
 }

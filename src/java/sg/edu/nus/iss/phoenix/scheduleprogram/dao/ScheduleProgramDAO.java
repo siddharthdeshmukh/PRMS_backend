@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +14,6 @@ package sg.edu.nus.iss.phoenix.scheduleprogram.dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.List;
 
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
@@ -36,11 +34,13 @@ public interface ScheduleProgramDAO {
 	 * as a parameter. Returned valueObject will be created using the
 	 * createValueObject() method.
      * @param name
+     * @param progdate
+     * @param duration
      * @return 
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException 
      * @throws java.sql.SQLException 
 	 */
-    public abstract ProgramSlot getObject(String name, Date Progdate,Time duration)
+    public abstract ProgramSlot getObject(String name, Date progdate,int duration)
 			throws NotFoundException, SQLException;
     /**
 	 * load-method. This will load valueObject contents from database using
@@ -116,7 +116,7 @@ public interface ScheduleProgramDAO {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
 	 */
-    public abstract int delete(ProgramSlot valueObject)
+    public abstract void delete(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;
     /**
 	 * deleteAll-method. This method will remove all information from the table
@@ -157,9 +157,12 @@ public interface ScheduleProgramDAO {
 	 * consume huge amounts of resources if table has lot's of rows. This should
 	 * only be used when target tables have only small amounts of data.
 	 * 
+     * @param weekStartDate
      * @return 
      * @throws java.sql.SQLException
 	 */
     public abstract List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException;
     
+    public abstract void updatePresenterProducer(ProgramSlot valueObject)throws SQLException;    
 }
+

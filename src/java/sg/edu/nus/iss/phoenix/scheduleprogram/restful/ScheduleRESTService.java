@@ -6,24 +6,19 @@ package sg.edu.nus.iss.phoenix.scheduleprogram.restful;
  * @author thushara
  */
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 import sg.edu.nus.iss.phoenix.scheduleprogram.service.ScheduleService;
 import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
-import sg.edu.nus.iss.phoenix.scheduleprogram.restful.ScheduleProgram;
 
 @Path("scheduleprogram")
 @RequestScoped
@@ -97,6 +92,6 @@ public class ScheduleRESTService {
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deleteProgramSlot(ProgramSlot ps) {
-        int result = service.deteleProgramSlot(ps);
+        service.deteleProgramSlot(ps);
     }
 }
