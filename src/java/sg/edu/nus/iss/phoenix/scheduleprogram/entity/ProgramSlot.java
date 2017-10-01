@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sg.edu.nus.iss.phoenix.scheduleprogram.entity;
 import java.io.Serializable;
 import java.sql.Time;
@@ -31,13 +27,23 @@ public class ProgramSlot implements Cloneable, Serializable{
         this.producer = producer;
     }
   
-
+  /** 
+     * Constructors. 
+     * The first one takes no arguments and provides the most simple
+     * way to create object instance. The another one takes one
+     * argument, which is the primary key of the corresponding table.
+     */
 
 
     public ProgramSlot() {
         
     }
-
+/** 
+     * Get- and Set-methods for persistent variables. The default
+     * behavior does not make any checks against malformed data,
+     * so these might require some manual additions.
+     * @return 
+     */
  
    public void setAll(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
           this.radioProgram = radioProgram;
