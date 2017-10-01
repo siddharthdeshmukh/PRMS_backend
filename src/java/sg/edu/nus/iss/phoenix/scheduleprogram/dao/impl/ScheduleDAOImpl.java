@@ -35,7 +35,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 	}
         
     @Override
-	public ProgramSlot getObject(String name, Date Progdate,Time duration) throws NotFoundException,
+	public ProgramSlot getObject(String name, Date Progdate,int duration) throws NotFoundException,
 			SQLException {
 
 		ProgramSlot valueObject = createValueObject();
@@ -98,7 +98,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 			stmt.setString(1, valueObject.getRadioProgram().getName());
 			stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
 			stmt.setDate(3, new java.sql.Date(valueObject.getStartTime().getTime()));
-                        stmt.setTime(4, valueObject.getDuration());
+                        stmt.setInt(4, valueObject.getDuration());
                         stmt.setString(5, valueObject.getPresenter());
                         stmt.setString(6, valueObject.getProducer());
 			int rowcount = databaseUpdate(stmt);
@@ -132,7 +132,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 			stmt = connection.prepareStatement(sql);
 			
 			stmt.setDate(1, new java.sql.Date(valueObject.getStartTime().getTime()));
-                        stmt.setTime(2, valueObject.getDuration());
+                        stmt.setInt(2, valueObject.getDuration());
                         stmt.setDate(3, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
 
 			int rowcount = databaseUpdate(stmt);
@@ -167,7 +167,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 				RadioProgram rp = new RadioProgram();
                                 valueObject.setRadioProgram(rp);
                                 valueObject.getRadioProgram().setName(result.getString("program-name"));
-				valueObject.setDuration(result.getTime("duration"));
+				valueObject.setDuration(result.getInt("duration"));
 				valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
                               valueObject.setStartTime(result.getTime("startTime"));
 
@@ -198,7 +198,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
                                 temp.getRadioProgram().setName(result.getString("program-name"));
 				temp.setDateOfProgram(result.getDate("dateOfProgram"));
 				temp.setStartTime(result.getTime("startTime"));
-                                temp.setDuration(result.getTime("duration"));
+                                temp.setDuration(result.getInt("duration"));
                                 temp.setPresenter(result.getString("presenter"));
                                 temp.setProducer(result.getString("producer"));
 				searchResults.add(temp);

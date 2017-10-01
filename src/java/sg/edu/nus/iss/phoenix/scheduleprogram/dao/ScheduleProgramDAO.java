@@ -22,7 +22,7 @@ import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
 public interface ScheduleProgramDAO {
     
     public abstract ProgramSlot createValueObject();
-    public abstract ProgramSlot getObject(String name, Date Progdate,Time duration)
+    public abstract ProgramSlot getObject(String name, Date Progdate,int duration)
 			throws NotFoundException, SQLException;
     public abstract void load(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;

@@ -1,3 +1,69 @@
+
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`role`
+-- -----------------------------------------------------
+
+-- role, access privilege
+insert into `phoenix`.`role` values("presenter","radio program presenter");
+insert into `phoenix`.`role` values("manager", "station manager");
+insert into `phoenix`.`role` values("admin", "system administrator");
+insert into `phoenix`.`role` values("producer", "program producer");
+
+
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`user`
+-- -----------------------------------------------------
+
+-- id, password, name, role
+insert into `phoenix`.`user` values("dilbert", "dilbert", "dilbert, the hero", "presenter:producer");
+insert into `phoenix`.`user` values("wally", "wally", "wally, the bludger", "producer");
+insert into `phoenix`.`user` values("pointyhead", "pointyhead", "pointyhead, the manager", "manager");
+insert into `phoenix`.`user` values("catbert", "catbert", "catbert, the hr", "admin:manager");
+insert into `phoenix`.`user` values("dogbert", "dogbert", "dogbert, the CEO", "producer:admin");
+
+
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`program-slot`
+-- -----------------------------------------------------
+
+insert into `phoenix`.`program-slot` values(30, '2017-09-28','09:00:00',"dance floor", "catbert", "dilbert");
+insert into `phoenix`.`program-slot` values(60, '2017-09-29','10:00:00',"your choice", "pointyhead", "dilbert");
+insert into `phoenix`.`program-slot` values(90, '2017-09-29','11:00:00',"top 10", "catbert", "dilbert");
+insert into `phoenix`.`program-slot` values(120, '2017-09-29','13:00:00',"short news", "pointyhead", "dilbert");
+insert into `phoenix`.`program-slot` values(30, '2017-09-29','14:00:00',"ppk", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` values(60, '2017-09-29','15:00:00',"opinions", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` values(90, '2017-09-29','16:00:00',"news", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` values(120, '2017-09-29','17:00:00',"charity", "catbert", "dilbert");
+insert into `phoenix`.`program-slot` values(30, '2017-09-30','10:00:00',"charity", "wally", "dilbert");
+
+
+
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`radio-program`
+-- -----------------------------------------------------
+
+insert into `phoenix`.`radio-program` values("short news", "summarised 5 minutes broadcasted every 2 hours", '00:05:00');
+insert into `phoenix`.`radio-program` values("news", "full news broadcasted four times a day", '00:30:00');
+insert into `phoenix`.`radio-program` values("top 10", "countdown music play of top 10 songs of the week", '01:00:00');
+insert into `phoenix`.`radio-program` values("your choice", "audinece ask for music album song of thier choice", '01:00:00');
+insert into `phoenix`.`radio-program` values("opinions", "discuss, debate or share opinions regarding a theme or subject", '00:30:00');
+insert into `phoenix`.`radio-program` values("noose", "black comedy show", '00:30:00');
+insert into `phoenix`.`radio-program` values("ppk", "phu chu kang comedy show", '00:30:00');
+insert into `phoenix`.`radio-program` values("dance floor", "dance show", '00:30:00');
+insert into `phoenix`.`radio-program` values("charity", "president charity show for unfortunate", '00:30:00');
+
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`annual schedule`
+-- -----------------------------------------------------
+
+-- year, assignBy
+insert into `phoenix`.`annual-schedule` values("2017", "pointyhead");
+
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`weekely schedule`
+-- -----------------------------------------------------
+
+-- weekNo., startDate, assignBy
 insert into `phoenix`.`weekly-schedule` values("1",'2017-01-02 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("2",'2017-01-09 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("3",'2017-01-16 00:00:00', "pointyhead");

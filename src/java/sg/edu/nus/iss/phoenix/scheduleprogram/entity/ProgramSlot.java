@@ -15,14 +15,14 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
  */
 public class ProgramSlot implements Cloneable, Serializable{
     
-  private Time duration;
+  private int duration;
   private Date dateOfProgram;
   private Date startTime;
   private RadioProgram radioProgram;
   private String presenter;
   private String producer;
 
-    public ProgramSlot(Time duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
+    public ProgramSlot(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
         this.duration = duration;
         this.dateOfProgram = dateOfProgram;
         this.startTime = startTime;
@@ -39,7 +39,7 @@ public class ProgramSlot implements Cloneable, Serializable{
     }
 
  
-   public void setAll(Time duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
+   public void setAll(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
           this.radioProgram = radioProgram;
           this.startTime = startTime;
           this.dateOfProgram = dateOfProgram;
@@ -48,11 +48,11 @@ public class ProgramSlot implements Cloneable, Serializable{
           this.producer = producer;
     }
 
-    public Time getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Time Duration) {
+    public void setDuration(int Duration) {
         this.duration = Duration;
     }
 
