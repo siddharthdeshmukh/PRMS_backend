@@ -97,7 +97,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, valueObject.getRadioProgram().getName());
 			stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
-			stmt.setDate(3, new java.sql.Date(valueObject.getStartTime().getTime()));
+			stmt.setTime(3, valueObject.getStartTime());
                         stmt.setInt(4, valueObject.getDuration());
                         stmt.setString(5, valueObject.getPresenter());
                         stmt.setString(6, valueObject.getProducer());
@@ -125,14 +125,14 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 	public void save(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		String sql = "UPDATE `program-slot` SET `startTime`=? WHERE (`duration` =? AND `dateOfProgram`=? ); ";
+		String sql = "UPDATE `program-slot` SET `startTime`=? WHERE (`program-name` =? AND `dateOfProgram`=? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
 			
-			stmt.setDate(1, new java.sql.Date(valueObject.getStartTime().getTime()));
-                        stmt.setInt(2, valueObject.getDuration());
+			stmt.setTime(1, valueObject.getStartTime());
+                        stmt.setString(2, valueObject.getRadioProgram().getName());
                         stmt.setDate(3, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
 
 			int rowcount = databaseUpdate(stmt);
@@ -196,7 +196,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
                                 RadioProgram rp = new RadioProgram();
                                 temp.setRadioProgram(rp);
                                 temp.getRadioProgram().setName(result.getString("program-name"));
-				temp.setDateOfProgram(result.getDate("dateOfProgram"));
+				temp.setDateOfProgram(new java.util.Date(result.getDate("dateOfProgram").getTime()));
 				temp.setStartTime(result.getTime("startTime"));
                                 temp.setDuration(result.getInt("duration"));
                                 temp.setPresenter(result.getString("presenter"));
@@ -256,11 +256,11 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
     public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
                 Calendar cal =Calendar.getInstance();
                 cal.setTime(weekStartDate);
-                cal.add(Calendar.DAY_OF_YEAR, 7);
+                cal.add(Calendar.DAY_OF_YEAR, 6);
                 
                 Date weekEndDate= new Date(cal.getTime().getTime());
                 openConnection();
-		String sql = "SELECT * FROM `program-slot` WHERE(dateOfProgrambetween ? and ? ) ORDER BY `program-name` ASC; ";
+		String sql = "SELECT * FROM `program-slot` WHERE(dateOfProgram between ? and ? ) ORDER BY `dateOfProgram` ASC, `startTime` ASC ; ";
 		PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setDate(1, weekStartDate);
                 stmt.setDate(2, weekEndDate);
@@ -301,7 +301,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setTime(1, new java.sql.Time(valueObject.getStartTime().getTime()));
+			stmt.setTime(1, valueObject.getStartTime());
                         stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
                         stmt.setString(3, valueObject.getRadioProgram().getName());
 

@@ -28,11 +28,11 @@ CREATE TABLE `user` (
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `role_index` (`role`),
-  KEY `name_index` (`name`)
+  KEY `role` (`role`),
+  KEY `name` (`name`)
 ) ENGINE=InnoDB;
 
-CREATE UNIQUE INDEX `id_UNIQUE` ON `phoenix`.`user` (`id` ASC) ;
+CREATE UNIQUE INDEX `id_UNIQUE_us` ON `phoenix`.`user` (`id` ASC) ;
 
 CREATE INDEX `role_index` ON `phoenix`.`user` (`role` ASC) ;
 

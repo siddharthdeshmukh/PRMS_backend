@@ -65,7 +65,7 @@ Connection connection;
               Calendar cal = Calendar.getInstance();
               cal.setTime(valueObject.getStartDate());
               int year = cal.get(Calendar.YEAR);
-		String sql = "SELECT * FROM phoenix.`weekly-schedule`; WHERE (`weekNo` = ? and YEAR(startDate)= ? ); ";
+		String sql = "SELECT * FROM phoenix.`weekly-schedule` WHERE (`weekNo` = ? and YEAR(startDate)= ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {

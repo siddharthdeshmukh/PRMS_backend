@@ -12,10 +12,13 @@ package sg.edu.nus.iss.phoenix.scheduleprogram.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.core.exceptions.OverLapException;
@@ -89,7 +92,10 @@ public class ScheduleService {
          Date startDate = new Date(weeklySch.getStartDate().getTime());
          List<ProgramSlot> programSlotForWeek = spdao.loadAllProgramSlotForWeek(startDate);
          for(ProgramSlot ps:programSlotForWeek){
-            if(programSlot.getDateOfProgram().compareTo(ps.getDateOfProgram())==0){
+             
+            System.out.println("comapre result is "+ convertDate(programSlot.getDateOfProgram()).compareTo(ps.getDateOfProgram()));
+             if(convertDate(programSlot.getDateOfProgram()).compareTo(ps.getDateOfProgram())==0){
+                System.out.println("Called for Date "+ ps.getDateOfProgram());
                 if(programSlot.getStartTime().compareTo(ps.getStartTime())==0){
                    // Date of Program and Start Time already Present for the Week, throw OverlapException
                 throw new OverLapException("Program Slot already assigned to Other Program"); 
@@ -106,7 +112,8 @@ public class ScheduleService {
         
         protected String getWeekNumber(ProgramSlot ps){
             Calendar cal = Calendar.getInstance();
-        cal.setTime(ps.getStartTime());
+            System.out.println(ps.toString());
+        cal.setTime(ps.getDateOfProgram());
         int weekNo = cal.get(Calendar.WEEK_OF_YEAR);
         return Integer.toString(weekNo);
         }
@@ -150,6 +157,18 @@ public class ScheduleService {
             cal.getTime();
             return true;
         }
+      protected java.util.Date convertDate(java.util.Date date){
+          java.util.Date newDate= null;
+          System.out.print(date);
+          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+          String dateString = sdf.format(date);
+        try {
+            newDate =  sdf.parse(dateString);
+        } catch (ParseException ex) {
+            Logger.getLogger(ScheduleService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          return newDate;
+      }
        
 }
 

@@ -13,12 +13,12 @@ public class ProgramSlot implements Cloneable, Serializable{
     
   private int duration;
   private Date dateOfProgram;
-  private Date startTime;
+  private Time startTime;
   private RadioProgram radioProgram;
   private String presenter;
   private String producer;
 
-    public ProgramSlot(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
+    public ProgramSlot(int duration, Date dateOfProgram, Time startTime, RadioProgram radioProgram, String presenter, String producer) {
         this.duration = duration;
         this.dateOfProgram = dateOfProgram;
         this.startTime = startTime;
@@ -45,7 +45,7 @@ public class ProgramSlot implements Cloneable, Serializable{
      * @return 
      */
  
-   public void setAll(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
+   public void setAll(int duration, Date dateOfProgram, Time startTime, RadioProgram radioProgram, String presenter, String producer) {
           this.radioProgram = radioProgram;
           this.startTime = startTime;
           this.dateOfProgram = dateOfProgram;
@@ -70,11 +70,11 @@ public class ProgramSlot implements Cloneable, Serializable{
         this.dateOfProgram = DateOfProgram;
     }
 
-    public Date getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
@@ -102,6 +102,10 @@ public class ProgramSlot implements Cloneable, Serializable{
     public void setProducer(String producer) {
         this.producer = producer;
     }
-  
+
+    @Override
+    public String toString() {
+        return "ProgramSlot{" + "duration=" + duration + ", dateOfProgram=" + dateOfProgram + ", startTime=" + startTime + ", radioProgram=" + radioProgram + ", presenter=" + presenter + ", producer=" + producer + '}';
+    }
   
 }
