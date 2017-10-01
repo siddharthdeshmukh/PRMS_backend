@@ -16,5 +16,5 @@ import sg.edu.nus.iss.phoenix.scheduleprogram.entity.WeeklySchedule;
 public interface WeeklyScheduleDAO {
     public abstract WeeklySchedule createValueObject();
     public abstract WeeklySchedule getWeeklySchedule(WeeklySchedule valueObject) throws NotFoundException,SQLException;
-    
+    public abstract void updateUser(WeeklySchedule valueObject) throws NotFoundException,SQLException;
 }

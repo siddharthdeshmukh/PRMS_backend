@@ -272,4 +272,30 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		closeConnection();
 		return searchResults;
     }
+
+    @Override
+    public void updatePresenterProducer(ProgramSlot valueObject) throws SQLException {
+        String presenterSql = "UPDATE `program-slot` SET `presenter`= NULL WHERE (`presenter` = ?); ";
+	PreparedStatement stmtPresenter = null;
+        String producerSql = "UPDATE `program-slot` SET `producer`= NULL WHERE (`producer` = ?); ";
+	PreparedStatement stmtProducer = null;
+		openConnection();
+		try {
+			stmtPresenter = connection.prepareStatement(presenterSql);
+			stmtProducer = connection.prepareStatement(producerSql);
+			stmtPresenter.setString(1, valueObject.getPresenter());
+                        stmtProducer.setString(1, valueObject.getProducer());
+
+			int rowcount = databaseUpdate(stmtPresenter);
+                        int rowcount_producer = databaseUpdate(stmtProducer);
+			
+		} finally {
+			if (stmtPresenter != null)
+                            stmtPresenter.close();
+                        if(stmtProducer!=null)
+                            stmtProducer.close();
+			closeConnection();
+		}
+                
+    }
 }

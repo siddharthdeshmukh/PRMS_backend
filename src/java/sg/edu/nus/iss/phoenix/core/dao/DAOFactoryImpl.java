@@ -6,8 +6,10 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.impl.RoleDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAOImpl;
+import sg.edu.nus.iss.phoenix.scheduleprogram.dao.AnnualScheduleDAO;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.ScheduleProgramDAO;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.WeeklyScheduleDAO;
+import sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.AnnualScheduleDAOImpl;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleDAOImpl;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.WeeklyScheduleDAOImpl;
 
@@ -17,6 +19,8 @@ public class DAOFactoryImpl implements DAOFactory {
 	private ProgramDAO rpdao = new ProgramDAOImpl();
         private ScheduleProgramDAO spdao= new ScheduleDAOImpl();
         private WeeklyScheduleDAO weeklyScheduleDAO= new WeeklyScheduleDAOImpl();
+        private AnnualScheduleDAO anDao = new AnnualScheduleDAOImpl();
+        
 	@Override
 	public UserDao getUserDAO() {
 		// TODO Auto-generated method stub
@@ -45,5 +49,10 @@ public class DAOFactoryImpl implements DAOFactory {
     public WeeklyScheduleDAO getWeeklyScheduleDAO() {
         return weeklyScheduleDAO;
        
+    }
+
+    @Override
+    public AnnualScheduleDAO getAnnualScheduleDAO() {
+        return anDao;
     }
 }
