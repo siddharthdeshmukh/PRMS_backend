@@ -32,7 +32,12 @@ public class WeeklySchedule implements Cloneable,Serializable{
 
     public WeeklySchedule() {
     }
-    
+    /** 
+     * Get- and Set-methods for persistent variables. The default
+     * behavior does not make any checks against malformed data,
+     * so these might require some manual additions.
+     * @return 
+     */
 
     public String getWeekNo() {
         return weekNo;
