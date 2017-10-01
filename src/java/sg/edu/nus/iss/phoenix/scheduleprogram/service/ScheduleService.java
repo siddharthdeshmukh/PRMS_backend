@@ -29,7 +29,7 @@ public class ScheduleService {
         WeeklyScheduleDAO weeklyScheduleDAO;
         public ScheduleService() {
 		super();
-		// Sorry. This implementation is wrong. To be fixed.
+               
 		factory = new DAOFactoryImpl();
 		spdao = factory.getSpdao();
                 weeklyScheduleDAO=factory.getWeeklyScheduleDAO();
@@ -43,7 +43,7 @@ public class ScheduleService {
 		if(!checkProgramSlotOverlap(ps, weeklySch))
                     spdao.create(ps);
 		} catch (OverLapException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}catch (NotFoundException e){
                     e.printStackTrace();

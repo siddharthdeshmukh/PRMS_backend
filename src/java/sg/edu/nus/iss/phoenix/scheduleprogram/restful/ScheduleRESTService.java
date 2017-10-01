@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sg.edu.nus.iss.phoenix.scheduleprogram.restful;
 
 /**
@@ -39,10 +35,17 @@ public class ScheduleRESTService {
     private UriInfo context;
     
     private ScheduleService service;
-    
+     /**
+     * Creates a new instance of ScheduleProgramRESTService
+     */
       public ScheduleRESTService() {
         service = new ScheduleService();
     }
+      
+     /**
+     * PUT method for creating an instance of resource
+     * @param content representation for the resource
+     */
       
       @PUT
     @Path("/create")
@@ -51,7 +54,10 @@ public class ScheduleRESTService {
         service.processCreate(ps);
     }
     
-    
+     /**
+     * POST method for updating or creating an instance of resource
+     * @param content representation for the resource
+     */
     
     @POST
     @Path("/update")
@@ -60,7 +66,10 @@ public class ScheduleRESTService {
         service.processModify(ps);
     }
     
-    
+    /**
+     * GET method for getting all the instances of resource
+     * returns all the saved schedule programs
+     */
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,7 +89,10 @@ public class ScheduleRESTService {
         }
         return spList;
     }
-    
+     /**
+     * DELETE method for deleting an instance of resource
+     * @param name name of the resource
+     */
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
