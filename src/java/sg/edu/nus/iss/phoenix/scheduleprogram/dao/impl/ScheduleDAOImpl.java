@@ -37,7 +37,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
     @Override
 	public ProgramSlot getObject(String name, Date Progdate,int duration) throws NotFoundException,
 			SQLException {
-
+    
 		ProgramSlot valueObject = createValueObject();
 		RadioProgram rp = new RadioProgram();
                 valueObject.setRadioProgram(rp);
@@ -244,6 +244,18 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
     @Override
     public void delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+			}
+			if (rowcount > 1) {
+				// System.out.println("PrimaryKey Error when updating DB! (Many objects were affected!)");
+				throw new SQLException(
+						"PrimaryKey Error when deleting program slot from DB! (Many objects were affected!)");
+			}
+                        
+		} finally {
+			if (stmt != null)
+				stmt.close();
+                                closeConnection();
+		}
     }
 
     @Override
@@ -296,6 +308,18 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
                             stmtProducer.close();
 			closeConnection();
 		}
+    }
                 
+   @Override
+    public ProgramSlot getObject(String name, Date progdate, int duration) throws NotFoundException, SQLException {
+        ProgramSlot valueObject = createValueObject();
+		RadioProgram rp = new RadioProgram();
+                valueObject.setRadioProgram(rp);
+                valueObject.getRadioProgram().setName(name);
+                valueObject.setDuration(duration);
+                valueObject.setDateOfProgram(progdate);
+		load(valueObject);
+		return valueObject;
+
     }
 }

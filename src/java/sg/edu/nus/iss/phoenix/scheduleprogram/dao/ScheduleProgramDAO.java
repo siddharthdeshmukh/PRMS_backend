@@ -38,4 +38,3 @@ public interface ScheduleProgramDAO {
     public abstract List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException;
     public abstract void updatePresenterProducer(ProgramSlot valueObject)throws SQLException;
 }
-

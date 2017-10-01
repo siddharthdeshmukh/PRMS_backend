@@ -80,4 +80,11 @@ public class ScheduleRESTService {
         }
         return spList;
     }
+    
+    @POST
+    @Path("/delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteProgramSlot(ProgramSlot ps) {
+        int result = service.deteleProgramSlot(ps);
+    }
 }
