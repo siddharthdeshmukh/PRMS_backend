@@ -7,6 +7,7 @@ package sg.edu.nus.iss.phoenix.scheduleprogram.entity;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
 /**
  *
@@ -14,18 +15,18 @@ import java.util.Date;
  */
 public class ProgramSlot implements Cloneable, Serializable{
     
-  private Time duration;
+  private int duration;
   private Date dateOfProgram;
   private Date startTime;
-  private String progamName;
+  private RadioProgram radioProgram;
   private String presenter;
   private String producer;
 
-    public ProgramSlot(Time Duration, Date DateOfProgram, Date Starttime, String progamName, String presenter, String producer) {
-        this.duration = Duration;
-        this.dateOfProgram = DateOfProgram;
-        this.startTime = Starttime;
-        this.progamName = progamName;
+    public ProgramSlot(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
+        this.duration = duration;
+        this.dateOfProgram = dateOfProgram;
+        this.startTime = startTime;
+        this.radioProgram = radioProgram;
         this.presenter = presenter;
         this.producer = producer;
     }
@@ -38,20 +39,20 @@ public class ProgramSlot implements Cloneable, Serializable{
     }
 
  
-   public void setAll(Time Duration, Date DateOfProgram, Date Starttime, String progamName, String presenter, String producer) {
-          this.progamName = progamName;
-          this.startTime = Starttime;
-          this.dateOfProgram = DateOfProgram;
-          this.duration=Duration;
+   public void setAll(int duration, Date dateOfProgram, Date startTime, RadioProgram radioProgram, String presenter, String producer) {
+          this.radioProgram = radioProgram;
+          this.startTime = startTime;
+          this.dateOfProgram = dateOfProgram;
+          this.duration=duration;
           this.presenter = presenter;
           this.producer = producer;
     }
 
-    public Time getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Time Duration) {
+    public void setDuration(int Duration) {
         this.duration = Duration;
     }
 
@@ -63,23 +64,22 @@ public class ProgramSlot implements Cloneable, Serializable{
         this.dateOfProgram = DateOfProgram;
     }
 
-    public Date getStarttime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStarttime(Date Starttime) {
-        this.startTime = Starttime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-
-
-    public String getProgamName() {
-        return progamName;
+    public RadioProgram getRadioProgram() {
+        return radioProgram;
     }
 
-    public void setProgamName(String progamName) {
-        this.progamName = progamName;
+    public void setRadioProgram(RadioProgram radioProgram) {
+        this.radioProgram = radioProgram;
     }
+
   
     public String getPresenter() {
         return presenter;

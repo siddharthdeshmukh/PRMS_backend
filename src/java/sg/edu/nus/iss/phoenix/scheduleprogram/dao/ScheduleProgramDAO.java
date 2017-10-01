@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -38,4 +39,3 @@ public interface ScheduleProgramDAO {
     public abstract List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException;
     
 }
-

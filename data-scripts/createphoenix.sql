@@ -21,44 +21,20 @@ CREATE UNIQUE INDEX `role_UNIQUE` ON `phoenix`.`role` (`role` ASC) ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `phoenix`.`user` ;
 
-CREATE  TABLE IF NOT EXISTS `phoenix`.`user` (
-  `id` VARCHAR(40) NOT NULL ,
-  `password` VARCHAR(45) NULL ,
-  `name` VARCHAR(45) NULL ,
-  `role` VARCHAR(255) NULL ,
-  PRIMARY KEY (`id`))
---  CONSTRAINT `role`
---    FOREIGN KEY (`role` )
---    REFERENCES `phoenix`.`role` (`role` )
---    ON DELETE NO ACTION
---    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `user` (
+  `id` varchar(40) NOT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `role_index` (`role`),
+  KEY `name_index` (`name`)
+) ENGINE=InnoDB;
 
 CREATE UNIQUE INDEX `id_UNIQUE` ON `phoenix`.`user` (`id` ASC) ;
 
 CREATE INDEX `role_index` ON `phoenix`.`user` (`role` ASC) ;
-
--- -----------------------------------------------------
--- Insert Data For Table `phoenix`.`role`
--- -----------------------------------------------------
-
--- role, access privilege
-insert into `phoenix`.`role` values("presenter","radio program presenter");
-insert into `phoenix`.`role` values("manager", "station manager");
-insert into `phoenix`.`role` values("admin", "system administrator");
-insert into `phoenix`.`role` values("producer", "program producer");
-
-
--- -----------------------------------------------------
--- Insert Data For Table `phoenix`.`user`
--- -----------------------------------------------------
-
--- id, password, name, role
-insert into `phoenix`.`user` values("dilbert", "dilbert", "dilbert, the hero", "presenter:producer");
-insert into `phoenix`.`user` values("wally", "wally", "wally, the bludger", "producer");
-insert into `phoenix`.`user` values("pointyhead", "pointyhead", "pointyhead, the manager", "manager");
-insert into `phoenix`.`user` values("catbert", "catbert", "catbert, the hr", "admin:manager");
-insert into `phoenix`.`user` values("dogbert", "dogbert", "dogbert, the CEO", "producer:admin");
 
 -- -----------------------------------------------------
 -- Table `phoenix`.`radio-program`
@@ -74,20 +50,6 @@ ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `name_UNIQUE` ON `phoenix`.`radio-program` (`name` ASC) ;
 
-
--- -----------------------------------------------------
--- Insert Data For Table `phoenix`.`radio-program`
--- -----------------------------------------------------
-
-insert into `phoenix`.`radio-program` values("short news", "summarised 5 minutes broadcasted every 2 hours", '00:05:00');
-insert into `phoenix`.`radio-program` values("news", "full news broadcasted four times a day", '00:30:00');
-insert into `phoenix`.`radio-program` values("top 10", "countdown music play of top 10 songs of the week", '01:00:00');
-insert into `phoenix`.`radio-program` values("your choice", "audinece ask for music album song of thier choice", '01:00:00');
-insert into `phoenix`.`radio-program` values("opinions", "discuss, debate or share opinions regarding a theme or subject", '00:30:00');
-insert into `phoenix`.`radio-program` values("noose", "black comedy show", '00:30:00');
-insert into `phoenix`.`radio-program` values("ppk", "phu chu kang comedy show", '00:30:00');
-insert into `phoenix`.`radio-program` values("dance floor", "dance show", '00:30:00');
-insert into `phoenix`.`radio-program` values("charity", "president charity show for unfortunate", '00:30:00');
 
 -- -----------------------------------------------------
 -- Table `phoenix`.`annual-schedule`
@@ -107,14 +69,13 @@ ENGINE = InnoDB;
 
 CREATE INDEX `id_annual_schedule` ON `phoenix`.`annual-schedule` (`assingedBy` ASC) ;
 
-insert into `phoenix`.`annual-schedule` values("2017", "pointyhead");
 -- -----------------------------------------------------
 -- Table `phoenix`.`program-slot`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `phoenix`.`program-slot` ;
 
-CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
-  `duration` time NOT NULL,
+CREATE TABLE `program-slot` (
+  `duration` int NOT NULL,
   `dateOfProgram` date NOT NULL,
   `startTime` time NOT NULL,
   `program-name` varchar(45) NOT NULL,
@@ -122,26 +83,18 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
   `producer` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`dateOfProgram`,`program-name`,`startTime`),
   KEY `name_program_slot` (`program-name`),
-  CONSTRAINT `name` FOREIGN KEY (`program-name`) REFERENCES `radio-program` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `presenter_idx` (`presenter`),
+  KEY `producer_idx` (`producer`),
+  CONSTRAINT `name` FOREIGN KEY (`program-name`) REFERENCES `radio-program` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `presenter` FOREIGN KEY (`presenter`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `producer` FOREIGN KEY (`producer`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
 CREATE INDEX `name_program_slot_idx` ON `phoenix`.`program-slot` (`program-name` ASC) ;
 
 -- CREATE UNIQUE INDEX `dateOfProgram_UNIQUE` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;
 
--- -----------------------------------------------------
--- Insert Data For Table `phoenix`.`program-slot`
--- -----------------------------------------------------
 
-insert into `phoenix`.`program-slot` values('00:30:00', '2017-09-28','09:00:00',"dance floor", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','10:00:00',"your choice", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','11:00:00',"top 10", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','13:00:00',"short news", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','14:00:00',"ppk", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','15:00:00',"opinions", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','16:00:00',"news", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-29','17:00:00',"charity", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values('01:00:00', '2017-09-30','10:00:00',"charity", "dilbert", "dilbert");
 -- -----------------------------------------------------
 -- Table `phoenix`.`weekly-schedule`
 -- -----------------------------------------------------

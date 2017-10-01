@@ -89,13 +89,13 @@ public class ScheduleService {
             if(programSlot==null){
                // throw new InvalidScheduleException("Input object is null");
             }
-            if(programSlot.getStarttime()==null || !checkValidDateAndTime(programSlot.getDateOfProgram())){
+            if(programSlot.getStartTime()==null || !checkValidDateAndTime(programSlot.getStartTime())){
                // throw new InvalidScheduleException("Input object start Time is null or incorrect");
             }
             if(programSlot.getDateOfProgram()==null || !checkValidDateAndTime(programSlot.getDateOfProgram())){
                // throw new InvalidScheduleException("Input object data of Program is null or incorrect");
             }
-            if(programSlot.getProgamName()== null || programSlot.getProgamName().isEmpty()){
+            if(programSlot.getRadioProgram()== null || programSlot.getRadioProgram().getName()== null ||programSlot.getRadioProgram().getName().isEmpty()){
                 //throw new InvalidScheduleException("Input program Name is null or empty");
             }
             try {
@@ -113,7 +113,7 @@ public class ScheduleService {
          Date startDate = new Date(weeklySch.getStartDate().getTime());
          List<ProgramSlot> programSlotForWeek = spdao.loadAllProgramSlotForWeek(startDate);
          for(ProgramSlot ps:programSlotForWeek){
-            if(programSlot.getDateOfProgram().compareTo(ps.getDateOfProgram())==0 && programSlot.getStarttime().compareTo(ps.getStarttime())==0){
+            if(programSlot.getDateOfProgram().compareTo(ps.getDateOfProgram())==0 && programSlot.getStartTime().compareTo(ps.getStartTime())==0){
                 // Date of Program and Start Time already Present for the Week, throw OverlapException
                 throw new OverLapException("Program Slot already assigned to Other Program");
             } 
@@ -123,7 +123,7 @@ public class ScheduleService {
         
         protected String getWeekNumber(ProgramSlot ps){
             Calendar cal = Calendar.getInstance();
-        cal.setTime(ps.getStarttime());
+        cal.setTime(ps.getStartTime());
         int weekNo = cal.get(Calendar.WEEK_OF_YEAR);
         return Integer.toString(weekNo);
         }

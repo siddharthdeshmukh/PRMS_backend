@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.ScheduleProgramDAO;
 import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
 
@@ -33,23 +34,12 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		return new ProgramSlot();
 	}
         
-    @Override
-	public ProgramSlot getObject(String name, Date Progdate,Time duration) throws NotFoundException,
-			SQLException {
-
-		ProgramSlot valueObject = createValueObject();
-		valueObject.setProgamName(name);
-                valueObject.setDuration(duration);
-                valueObject.setDateOfProgram(Progdate);
-		load(valueObject);
-		return valueObject;
-	}
     
         @Override
 	public void load(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		if (valueObject.getProgamName()== null) {
+		if (valueObject.getRadioProgram().getName()== null || valueObject.getRadioProgram().getName().trim().isEmpty()) {
 			// System.out.println("Can not select without Primary-Key!");
 			throw new NotFoundException("Can not select without Primary-Key!");
 		}
@@ -59,7 +49,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getProgamName());
+			stmt.setString(1, valueObject.getRadioProgram().getName());
 
 			singleQuery(stmt, valueObject);
 
@@ -92,10 +82,10 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		try {
 			sql = "INSERT INTO `program-slot` (`program-name`, `dateOfProgram`, `startTime`,`duration`,`presenter`, `producer` ) VALUES (?,?,?,?,?,?); ";
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, valueObject.getProgamName());
+			stmt.setString(1, valueObject.getRadioProgram().getName());
 			stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
-			stmt.setDate(3, new java.sql.Date(valueObject.getStarttime().getTime()));
-                        stmt.setTime(4, valueObject.getDuration());
+			stmt.setDate(3, new java.sql.Date(valueObject.getStartTime().getTime()));
+                        stmt.setInt(4, valueObject.getDuration());
                         stmt.setString(5, valueObject.getPresenter());
                         stmt.setString(6, valueObject.getProducer());
 			int rowcount = databaseUpdate(stmt);
@@ -128,8 +118,8 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		try {
 			stmt = connection.prepareStatement(sql);
 			
-			stmt.setDate(1, new java.sql.Date(valueObject.getStarttime().getTime()));
-                        stmt.setTime(2, valueObject.getDuration());
+			stmt.setDate(1, new java.sql.Date(valueObject.getStartTime().getTime()));
+                        stmt.setInt(2, valueObject.getDuration());
                         stmt.setDate(3, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
 
 			int rowcount = databaseUpdate(stmt);
@@ -161,10 +151,12 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 
 			if (result.next()) {
 
-				valueObject.setProgamName(result.getString("program-name"));
-				valueObject.setDuration(result.getTime("duration"));
+				RadioProgram rp = new RadioProgram();
+                                valueObject.setRadioProgram(rp);
+                                valueObject.getRadioProgram().setName(result.getString("program-name"));
+				valueObject.setDuration(result.getInt("duration"));
 				valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
-                              valueObject.setStarttime(result.getTime("startTime"));
+                              valueObject.setStartTime(result.getTime("startTime"));
 
 			} else {
 				// System.out.println("RadioProgram Object Not Found!");
@@ -188,11 +180,12 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 
 			while (result.next()) {
 				ProgramSlot temp = createValueObject();
-
-				temp.setProgamName(result.getString("program-name"));
+                                RadioProgram rp = new RadioProgram();
+                                temp.setRadioProgram(rp);
+                                temp.getRadioProgram().setName(result.getString("program-name"));
 				temp.setDateOfProgram(result.getDate("dateOfProgram"));
-				temp.setStarttime(result.getTime("startTime"));
-                                temp.setDuration(result.getTime("duration"));
+				temp.setStartTime(result.getTime("startTime"));
+                                temp.setDuration(result.getInt("duration"));
                                 temp.setPresenter(result.getString("presenter"));
                                 temp.setProducer(result.getString("producer"));
 				searchResults.add(temp);
@@ -242,9 +235,9 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setTime(1, new java.sql.Time(valueObject.getStarttime().getTime()));
+			stmt.setTime(1, new java.sql.Time(valueObject.getStartTime().getTime()));
                         stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
-                        stmt.setString(3, valueObject.getProgamName());
+                        stmt.setString(3, valueObject.getRadioProgram().getName());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -290,5 +283,17 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
                 List<ProgramSlot> searchResults = listQuery(stmt);
 		closeConnection();
 		return searchResults;
+    }
+
+    @Override
+    public ProgramSlot getObject(String name, Date Progdate, Time duration) throws NotFoundException, SQLException {
+        ProgramSlot valueObject = createValueObject();
+		RadioProgram rp = new RadioProgram();
+                valueObject.setRadioProgram(rp);
+                valueObject.getRadioProgram().setName(name);
+                //valueObject.setDuration(duration);
+                valueObject.setDateOfProgram(Progdate);
+		load(valueObject);
+		return valueObject;
     }
 }
