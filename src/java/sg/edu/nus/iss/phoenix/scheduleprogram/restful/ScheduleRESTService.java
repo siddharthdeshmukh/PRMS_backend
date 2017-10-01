@@ -10,9 +10,13 @@ package sg.edu.nus.iss.phoenix.scheduleprogram.restful;
  * @author thushara
  */
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,14 +24,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.scheduleprogram.service.ScheduleService;
 import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
-import sg.edu.nus.iss.phoenix.scheduleprogram.restful.ScheduleProgram;
 
 @Path("scheduleprogram")
 @RequestScoped
@@ -81,10 +85,23 @@ public class ScheduleRESTService {
         return spList;
     }
     
-    @POST
+    @DELETE
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteProgramSlot(ProgramSlot ps) {
+    public void deleteProgramSlot(@QueryParam("programName") String name,@QueryParam("startTime") String startTime,@QueryParam("dateOfProgram") String dateOfProgram) throws ParseException {
+        DateFormat formatter = new SimpleDateFormat("yyyy-mm-dd,HH:mm:ss");
+        DateFormat timeFormatter=new SimpleDateFormat("HH:mm:ss");
+        Date covertedStartTime = new Date();
+        Date convertedDateOfProgram = new Date();
+            covertedStartTime = timeFormatter.parse(startTime);
+            convertedDateOfProgram = formatter.parse(dateOfProgram);
+        
+        ProgramSlot ps = new ProgramSlot();
+        ps.setDateOfProgram(convertedDateOfProgram);
+        ps.setStartTime(covertedStartTime);
+        RadioProgram radioProgram=new RadioProgram();
+        radioProgram.setName(name);
+        ps.setRadioProgram(radioProgram);
         int result = service.deteleProgramSlot(ps);
     }
 }
