@@ -117,7 +117,39 @@ public class ScheduleService {
           cal.add(Calendar.MINUTE, ps.getDuration());
           java.util.Date endTime =cal.getTime();
           return endTime;
-      }  
+      } 
+      
+      
+      public void deteleProgramSlot(ProgramSlot programSlot) //throws InvalidScheduleException, NotFoundException, SQLException
+        {   int result =0;
+            if(programSlot==null){
+               // throw new InvalidScheduleException("Input object is null");
+            }
+            if(programSlot.getStartTime()==null || !checkValidDateAndTime(programSlot.getStartTime())){
+               // throw new InvalidScheduleException("Input object start Time is null or incorrect");
+            }
+            if(programSlot.getDateOfProgram()==null || !checkValidDateAndTime(programSlot.getDateOfProgram())){
+               // throw new InvalidScheduleException("Input object data of Program is null or incorrect");
+            }
+            if(programSlot.getRadioProgram()== null || programSlot.getRadioProgram().getName()== null ||programSlot.getRadioProgram().getName().isEmpty()){
+                //throw new InvalidScheduleException("Input program Name is null or empty");
+            }
+            try {
+               spdao.delete(programSlot);
+            }catch(NotFoundException nFE){
+                
+            }catch(SQLException sE){
+                
+            }
+        }
+      
+      protected boolean checkValidDateAndTime(java.util.Date date){
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(date);
+            cal.getTime();
+            return true;
+        }
        
 }
 

@@ -242,20 +242,8 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 	}
 
     @Override
-    public void delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
+    public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-			}
-			if (rowcount > 1) {
-				// System.out.println("PrimaryKey Error when updating DB! (Many objects were affected!)");
-				throw new SQLException(
-						"PrimaryKey Error when deleting program slot from DB! (Many objects were affected!)");
-			}
-                        
-		} finally {
-			if (stmt != null)
-				stmt.close();
-                                closeConnection();
-		}
     }
 
     @Override
@@ -263,10 +251,6 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
 
     @Override
     public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
@@ -309,17 +293,34 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 			closeConnection();
 		}
     }
-                
-   @Override
-    public ProgramSlot getObject(String name, Date progdate, int duration) throws NotFoundException, SQLException {
-        ProgramSlot valueObject = createValueObject();
-		RadioProgram rp = new RadioProgram();
-                valueObject.setRadioProgram(rp);
-                valueObject.getRadioProgram().setName(name);
-                valueObject.setDuration(duration);
-                valueObject.setDateOfProgram(progdate);
-		load(valueObject);
-		return valueObject;
 
+    @Override
+    public void delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
+        String sql = "DELETE FROM `program-slot` WHERE (`startTime`=? AND `dateOfProgram`=?  AND `program-name` = ?); ";
+		PreparedStatement stmt = null;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setTime(1, new java.sql.Time(valueObject.getStartTime().getTime()));
+                        stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
+                        stmt.setString(3, valueObject.getRadioProgram().getName());
+
+			int rowcount = databaseUpdate(stmt);
+			if (rowcount == 0) {
+				// System.out.println("Object could not be saved! (PrimaryKey not found)");
+				throw new NotFoundException(
+						"Object could not be deleted! (Programslot not found)");
+			}
+			if (rowcount > 1) {
+				// System.out.println("PrimaryKey Error when updating DB! (Many objects were affected!)");
+				throw new SQLException(
+						"PrimaryKey Error when deleting program slot from DB! (Many objects were affected!)");
+			}
+      
+		} finally {
+			if (stmt != null)
+				stmt.close();
+                                closeConnection();
+		}
     }
 }
