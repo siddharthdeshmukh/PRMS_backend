@@ -236,8 +236,33 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 	}
 
     @Override
-    public void delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int delete(ProgramSlot valueObject) throws NotFoundException, SQLException {
+        String sql = "DELETE FROM `program-slot` WHERE (`startTime`=? AND `dateOfProgram`=?  AND `program-name` = ?); ";
+		PreparedStatement stmt = null;
+		openConnection();
+		try {
+			stmt = connection.prepareStatement(sql);
+			stmt.setTime(1, new java.sql.Time(valueObject.getStarttime().getTime()));
+                        stmt.setDate(2, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
+                        stmt.setString(3, valueObject.getProgamName());
+
+			int rowcount = databaseUpdate(stmt);
+			if (rowcount == 0) {
+				// System.out.println("Object could not be saved! (PrimaryKey not found)");
+				throw new NotFoundException(
+						"Object could not be deleted! (Programslot not found)");
+			}
+			if (rowcount > 1) {
+				// System.out.println("PrimaryKey Error when updating DB! (Many objects were affected!)");
+				throw new SQLException(
+						"PrimaryKey Error when deleting program slot from DB! (Many objects were affected!)");
+			}
+                        return rowcount;
+		} finally {
+			if (stmt != null)
+				stmt.close();
+                                closeConnection();
+		}
     }
 
     @Override

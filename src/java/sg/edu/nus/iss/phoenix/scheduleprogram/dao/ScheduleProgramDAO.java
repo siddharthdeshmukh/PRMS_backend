@@ -30,7 +30,7 @@ public interface ScheduleProgramDAO {
     public abstract void create(ProgramSlot valueObject) throws SQLException;
     public abstract void save(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;
-    public abstract void delete(ProgramSlot valueObject)
+    public abstract int delete(ProgramSlot valueObject)
 			throws NotFoundException, SQLException;
     public abstract void deleteAll(Connection conn) throws SQLException;
     public abstract List<ProgramSlot> searchMatching(ProgramSlot valueObject)

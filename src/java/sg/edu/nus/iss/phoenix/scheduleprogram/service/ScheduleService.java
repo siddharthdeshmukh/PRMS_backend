@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
+import sg.edu.nus.iss.phoenix.core.exceptions.InvalidScheduleException;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.core.exceptions.OverLapException;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.ScheduleProgramDAO;
@@ -83,6 +84,30 @@ public class ScheduleService {
 
         }
         
+        public int deteleProgramSlot(ProgramSlot programSlot) //throws InvalidScheduleException, NotFoundException, SQLException
+        {   int result =0;
+            if(programSlot==null){
+               // throw new InvalidScheduleException("Input object is null");
+            }
+            if(programSlot.getStarttime()==null || !checkValidDateAndTime(programSlot.getDateOfProgram())){
+               // throw new InvalidScheduleException("Input object start Time is null or incorrect");
+            }
+            if(programSlot.getDateOfProgram()==null || !checkValidDateAndTime(programSlot.getDateOfProgram())){
+               // throw new InvalidScheduleException("Input object data of Program is null or incorrect");
+            }
+            if(programSlot.getProgamName()== null || programSlot.getProgamName().isEmpty()){
+                //throw new InvalidScheduleException("Input program Name is null or empty");
+            }
+            try {
+                result = spdao.delete(programSlot);
+            }catch(NotFoundException nFE){
+                
+            }catch(SQLException sE){
+                
+            }
+            return result;
+        }
+        
         protected boolean checkProgramSlotOverlap(ProgramSlot programSlot,WeeklySchedule weeklySch) throws NotFoundException, SQLException,OverLapException{
          weeklySch=  weeklyScheduleDAO.getWeeklySchedule(weeklySch);
          Date startDate = new Date(weeklySch.getStartDate().getTime());
@@ -103,6 +128,12 @@ public class ScheduleService {
         return Integer.toString(weekNo);
         }
         
-       
+        protected boolean checkValidDateAndTime(java.util.Date date){
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(date);
+            cal.getTime();
+            return true;
+        }
 }
 

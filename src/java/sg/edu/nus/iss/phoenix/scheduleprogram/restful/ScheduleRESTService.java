@@ -78,7 +78,14 @@ public class ScheduleRESTService {
                         SpList.get(i).getPresenter(),
                         SpList.get(i).getProducer()));
         }
-           System.out.println(spList.getSpList().get(0).getPresenter()); 
+         
         return spList;
+    }
+    
+    @POST
+    @Path("/delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteProgramSlot(ProgramSlot ps) {
+        int result = service.deteleProgramSlot(ps);
     }
 }
