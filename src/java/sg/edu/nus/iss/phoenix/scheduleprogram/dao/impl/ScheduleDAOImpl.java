@@ -25,14 +25,28 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.scheduleprogram.dao.ScheduleProgramDAO;
 import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
 
+/**
+ * ScheduleProgram Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve ScheduleProgram object
+ * instances.
+ */
+
 public class ScheduleDAOImpl implements ScheduleProgramDAO{
     
     Connection connection;
+    
+    /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#createValueObject()
+	 */
     
     @Override
 	public ProgramSlot createValueObject() {
 		return new ProgramSlot();
 	}
+        
+        /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#getObject(java.lang.String)
+	 */
         
     @Override
 	public ProgramSlot getObject(String name, Date Progdate,int duration) throws NotFoundException,
@@ -47,6 +61,10 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		load(valueObject);
 		return valueObject;
 	}
+        
+        /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#load(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+	 */
     
         @Override
 	public void load(ProgramSlot valueObject) throws NotFoundException,
@@ -73,6 +91,9 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		}
 	}
         
+        /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#loadAll()
+	 */
         
         @Override
 	public List<ProgramSlot> loadAll() throws SQLException {
@@ -84,6 +105,10 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		
 		return searchResults;
 	}
+        
+        /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#create(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+	 */
         
         @Override
 	public synchronized void create(ProgramSlot valueObject)
@@ -114,12 +139,30 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		}
 
 	}
+        
+     /**
+	 * databaseUpdate-method. This method is a helper method for internal use.
+	 * It will execute all database handling that will change the information in
+	 * tables. SELECT queries will not be executed here however. The return
+	 * value indicates how many rows were affected. This method will also make
+	 * sure that if cache is used, it will reset when data changes.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be executed.
+         * @return 
+         * @throws java.sql.SQLException
+     */
+        
     protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
 
 		int result = stmt.executeUpdate();
 
 		return result;
 	}
+    
+        /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#save(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+	 */
         
         @Override
 	public void save(ProgramSlot valueObject) throws NotFoundException,
@@ -153,7 +196,20 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		}
 	}
 
-	        
+        /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return only one row. The
+	 * result set will be converted to valueObject. If no rows were found,
+	 * NotFoundException will be thrown.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be executed.
+	 * @param valueObject
+	 *            Class-instance where resulting data will be stored.
+     * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
+     * @throws java.sql.SQLException
+	 */
+        	        
         protected void singleQuery(PreparedStatement stmt, ProgramSlot valueObject)
 			throws NotFoundException, SQLException {
 
@@ -183,6 +239,19 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 			closeConnection();
 		}
 	}
+        
+       /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return multiple rows. The
+	 * result set will be converted to the List of valueObjects. If no rows were
+	 * found, an empty List will be returned.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be executed.
+     * @return 
+     * @throws java.sql.SQLException
+	 */
+        
         protected List<ProgramSlot> listQuery(PreparedStatement stmt) throws SQLException {
 
 		ArrayList<ProgramSlot> searchResults = new ArrayList<>();
@@ -241,17 +310,27 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		}
 	}
 
+    /* (non-Javadoc)
+     * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#searchMatching(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+     */
+        
     @Override
     public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /* (non-Javadoc)
+	 * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#deleteAll(java.sql.Connection)
+	 */
+    
     @Override
     public void deleteAll(Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
+     /* (non-Javadoc)
+     * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#loadAllProgramSlotForWeek(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+     */
     @Override
     public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
                 Calendar cal =Calendar.getInstance();
@@ -268,6 +347,10 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 		closeConnection();
 		return searchResults;
     }
+    
+    /* (non-Javadoc)
+     * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#updatePresenterProducer(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+     */
 
     @Override
     public void updatePresenterProducer(ProgramSlot valueObject) throws SQLException {
@@ -293,6 +376,10 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 			closeConnection();
 		}
     }
+    
+     /* (non-Javadoc)
+     * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.ScheduleProgramDAO#delete(sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot)
+     */
 
     @Override
     public void delete(ProgramSlot valueObject) throws NotFoundException, SQLException {

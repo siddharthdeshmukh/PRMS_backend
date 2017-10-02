@@ -18,6 +18,13 @@ import sg.edu.nus.iss.phoenix.scheduleprogram.entity.AnnualSchedule;
  *
  * @author siddharth
  */
+
+/**
+ * AnnualSchedule Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve WeeklySchedule object
+ * instances.
+ */
+
 public class AnnualScheduleDAOImpl implements AnnualScheduleDAO {
 Connection connection;
    
@@ -46,6 +53,11 @@ Connection connection;
 			e.printStackTrace();
 		}
 	}
+     
+     /* (non-Javadoc)
+         * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.AnnualScheduleDAO#updateUser(sg.edu.nus.iss.phoenix.scheduleprogram.entity.AnnualSchedule)
+     */
+        
     @Override
     public void updateUser(AnnualSchedule valueObject) throws NotFoundException, SQLException {
        String sql = "UPDATE `annual-schedule` SET `assingedBy`= NULL WHERE (`assingedBy` = ?); ";
@@ -64,6 +76,19 @@ Connection connection;
 			closeConnection();
 		}
     }
+    
+     /**
+	 * databaseUpdate-method. This method is a helper method for internal use.
+	 * It will execute all database handling that will change the information in
+	 * tables. SELECT queries will not be executed here however. The return
+	 * value indicates how many rows were affected. This method will also make
+	 * sure that if cache is used, it will reset when data changes.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be executed.
+         * @return 
+         * @throws java.sql.SQLException
+    */
     
     protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
 

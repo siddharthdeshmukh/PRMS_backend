@@ -20,6 +20,13 @@ import sg.edu.nus.iss.phoenix.scheduleprogram.entity.WeeklySchedule;
  *
  * @author siddharth
  */
+
+/**
+ * WeeklySchedule Data Access Object (DAO). This class contains all database
+ * handling that is needed to permanently store and retrieve WeeklySchedule object
+ * instances.
+ */
+
 public class WeeklyScheduleDAOImpl implements WeeklyScheduleDAO{
 Connection connection;
    
@@ -50,7 +57,11 @@ Connection connection;
 	}
 
     /**
-     *
+     * getWeeklySchedule. This will create and load valueObject contents from
+     * database using given Primary-Key as identifier. This method is just a
+     * convenience method for the real load-method which accepts the valueObject
+     * as a parameter. Returned valueObject will be created using the
+     * createValueObject() method.
      * @param valueObject
      * @return
      * @throws NotFoundException
@@ -82,6 +93,20 @@ Connection connection;
                 return weeklySchedule;
     }
     
+     /**
+	 * databaseQuery-method. This method is a helper method for internal use. It
+	 * will execute all database queries that will return only one row. The
+	 * result set will be converted to valueObject. If no rows were found,
+	 * NotFoundException will be thrown.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be executed.
+	 * @param valueObject
+	 *            Class-instance where resulting data will be stored.
+         * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
+         * @throws java.sql.SQLException
+    */
+    
     protected WeeklySchedule singleQuery(PreparedStatement stmt, WeeklySchedule valueObject)
 			throws NotFoundException, SQLException {
 
@@ -110,10 +135,18 @@ Connection connection;
                 return valueObject;
 	}
     
+    /* (non-Javadoc)
+         * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.WeeklyScheduleDAO#createValueObject()
+    */
+    
     @Override
 	public WeeklySchedule createValueObject() {
 		return new WeeklySchedule();
 	}
+        
+     /* (non-Javadoc)
+         * @see sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl.WeeklyScheduleDAO#updateUser(sg.edu.nus.iss.phoenix.scheduleprogram.entity.WeeklySchedule)
+    */
 
     @Override
     public void updateUser(WeeklySchedule valueObject) throws NotFoundException, SQLException {
@@ -133,6 +166,19 @@ Connection connection;
 			closeConnection();
 		}
     }
+    
+    /**
+	 * databaseUpdate-method. This method is a helper method for internal use.
+	 * It will execute all database handling that will change the information in
+	 * tables. SELECT queries will not be executed here however. The return
+	 * value indicates how many rows were affected. This method will also make
+	 * sure that if cache is used, it will reset when data changes.
+	 * 
+	 * @param stmt
+	 *            This parameter contains the SQL statement to be executed.
+         * @return 
+         * @throws java.sql.SQLException
+    */
     
     protected int databaseUpdate(PreparedStatement stmt) throws SQLException {
 

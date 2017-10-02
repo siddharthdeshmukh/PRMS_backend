@@ -89,7 +89,7 @@ public class UserRESTService {
    
     /**
      * DELETE method for deleting an instance of resource
-     * @param name name of the resource
+     * @param name name of the resource+
      */
     @DELETE
     @Path("/delete/{username}")
