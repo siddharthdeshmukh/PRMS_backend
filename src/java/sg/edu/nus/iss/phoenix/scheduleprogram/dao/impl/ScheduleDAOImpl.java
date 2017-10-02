@@ -168,15 +168,19 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 	public void save(ProgramSlot valueObject) throws NotFoundException,
 			SQLException {
 
-		String sql = "UPDATE `program-slot` SET `startTime`=? WHERE (`program-name` =? AND `dateOfProgram`=? ); ";
+		String sql = "UPDATE `program-slot` SET `startTime`=?, presenter =?, producer =?, duration =?, dateOfProgram =?  WHERE (id = ? ); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {
 			stmt = connection.prepareStatement(sql);
 			
 			stmt.setTime(1, valueObject.getStartTime());
-                        stmt.setString(2, valueObject.getRadioProgram().getName());
-                        stmt.setDate(3, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
+                        stmt.setString(2, valueObject.getPresenter());
+                        stmt.setString(3, valueObject.getProducer());
+                        stmt.setInt(4, valueObject.getDuration());
+                        stmt.setDate(5, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
+                        stmt.setTime(6, valueObject.getStartTime());
+                        stmt.setInt(7, valueObject.getId());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
@@ -222,6 +226,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 
 				RadioProgram rp = new RadioProgram();
                                 valueObject.setRadioProgram(rp);
+                                valueObject.setId(result.getInt("id"));
                                 valueObject.getRadioProgram().setName(result.getString("program-name"));
 				valueObject.setDuration(result.getInt("duration"));
 				valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
@@ -264,6 +269,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
 				ProgramSlot temp = createValueObject();
                                 RadioProgram rp = new RadioProgram();
                                 temp.setRadioProgram(rp);
+                                temp.setId(result.getInt("id"));
                                 temp.getRadioProgram().setName(result.getString("program-name"));
 				temp.setDateOfProgram(new java.util.Date(result.getDate("dateOfProgram").getTime()));
 				temp.setStartTime(result.getTime("startTime"));

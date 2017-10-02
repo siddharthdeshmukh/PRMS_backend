@@ -74,21 +74,23 @@ CREATE INDEX `id_annual_schedule` ON `phoenix`.`annual-schedule` (`assingedBy` A
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `phoenix`.`program-slot` ;
 
-CREATE TABLE `program-slot` (
-  `duration` int NOT NULL,
+CREATE TABLE phoenix.`program-slot` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `duration` int(11) NOT NULL,
   `dateOfProgram` date NOT NULL,
   `startTime` time NOT NULL,
   `program-name` varchar(45) NOT NULL,
   `presenter` varchar(45) DEFAULT NULL,
   `producer` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`dateOfProgram`,`program-name`,`startTime`),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `name_program_slot` (`program-name`),
   KEY `presenter_idx` (`presenter`),
   KEY `producer_idx` (`producer`),
   CONSTRAINT `name` FOREIGN KEY (`program-name`) REFERENCES `radio-program` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `presenter` FOREIGN KEY (`presenter`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `producer` FOREIGN KEY (`producer`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB;
+) ENGINE=InnoDB ;
 
 CREATE INDEX `name_program_slot_idx` ON `phoenix`.`program-slot` (`program-name` ASC) ;
 

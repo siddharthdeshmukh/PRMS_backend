@@ -85,7 +85,8 @@ public class ScheduleRESTService {
         
         for (int i = 0; i < SpList.size(); i++) {
             spList.getSpList().add(
-                new ProgramSlot(SpList.get(i).getDuration(),
+                new ProgramSlot(SpList.get(i).getId(),
+                        SpList.get(i).getDuration(),
                         SpList.get(i).getDateOfProgram(),
                         SpList.get(i).getStartTime(),
                         SpList.get(i).getRadioProgram(),

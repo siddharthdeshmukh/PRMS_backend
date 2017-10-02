@@ -106,12 +106,13 @@ insert into `phoenix`.`weekly-schedule` values("52",'2017-12-25 00:00:00', "poin
 -- Insert Data For Table `phoenix`.`program-slot`
 -- -----------------------------------------------------
 
-insert into `phoenix`.`program-slot` values(30, '2017-09-28','09:00:00',"dance floor", "catbert", "dilbert");
-insert into `phoenix`.`program-slot` values(60, '2017-09-29','10:00:00',"your choice", "pointyhead", "dilbert");
-insert into `phoenix`.`program-slot` values(90, '2017-09-29','11:00:00',"top 10", "catbert", "dilbert");
-insert into `phoenix`.`program-slot` values(120, '2017-09-29','13:00:00',"short news", "pointyhead", "dilbert");
-insert into `phoenix`.`program-slot` values(30, '2017-09-29','14:00:00',"ppk", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values(60, '2017-09-29','15:00:00',"opinions", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values(90, '2017-09-29','16:00:00',"news", "dilbert", "dilbert");
-insert into `phoenix`.`program-slot` values(120, '2017-09-29','17:00:00',"charity", "catbert", "dilbert");
-insert into `phoenix`.`program-slot` values(30, '2017-09-30','10:00:00',"charity", "wally", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(30, '2017-09-28','09:00:00',"dance floor", "catbert", "dilbert");
+
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(60, '2017-09-29','10:00:00',"your choice", "pointyhead", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(90, '2017-09-29','11:00:00',"top 10", "catbert", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(120, '2017-09-29','13:00:00',"short news", "pointyhead", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(30, '2017-09-29','14:00:00',"ppk", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(60, '2017-09-29','15:00:00',"opinions", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(90, '2017-09-29','16:00:00',"news", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(120, '2017-09-29','17:00:00',"charity", "catbert", "dilbert");
+insert into `phoenix`.`program-slot` (duration,dateOfProgram,startTime,`program-name`,presenter,producer) values(30, '2017-09-30','10:00:00',"charity", "wally", "dilbert");

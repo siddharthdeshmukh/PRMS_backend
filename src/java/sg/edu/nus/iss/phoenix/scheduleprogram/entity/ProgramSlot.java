@@ -15,7 +15,7 @@ public class ProgramSlot implements Cloneable, Serializable{
  * Persistent Instance variables. This data is directly 
  * mapped to the columns of database table.
  */
-    
+  private int id;
   private int duration;
   private Date dateOfProgram;
   private Time startTime;
@@ -41,6 +41,18 @@ public class ProgramSlot implements Cloneable, Serializable{
         this.presenter = presenter;
         this.producer = producer;
     }  
+
+    public ProgramSlot(int id, int duration, Date dateOfProgram, Time startTime, RadioProgram radioProgram, String presenter, String producer) {
+        this.id = id;
+        this.duration = duration;
+        this.dateOfProgram = dateOfProgram;
+        this.startTime = startTime;
+        this.radioProgram = radioProgram;
+        this.presenter = presenter;
+        this.producer = producer;
+    }
+    
+    
  
     /** 
      * Get- and Set-methods for persistent variables. The default
@@ -106,6 +118,15 @@ public class ProgramSlot implements Cloneable, Serializable{
     public void setProducer(String producer) {
         this.producer = producer;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     
     /**
      * toString will return String object representing the state of this 
