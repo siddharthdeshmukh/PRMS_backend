@@ -11,13 +11,28 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
  */
 public class ProgramSlot implements Cloneable, Serializable{
     
+/** 
+ * Persistent Instance variables. This data is directly 
+ * mapped to the columns of database table.
+ */
+    
   private int duration;
   private Date dateOfProgram;
   private Time startTime;
   private RadioProgram radioProgram;
   private String presenter;
   private String producer;
-
+  
+   /** 
+     * Constructors. 
+     * The first one takes no arguments and provides the most simple
+     * way to create object instance. The another one takes six
+     * argument, which is the primary key of the corresponding table.
+     */
+  
+    public ProgramSlot() {        
+    }
+  
     public ProgramSlot(int duration, Date dateOfProgram, Time startTime, RadioProgram radioProgram, String presenter, String producer) {
         this.duration = duration;
         this.dateOfProgram = dateOfProgram;
@@ -25,20 +40,9 @@ public class ProgramSlot implements Cloneable, Serializable{
         this.radioProgram = radioProgram;
         this.presenter = presenter;
         this.producer = producer;
-    }
-  
-  /** 
-     * Constructors. 
-     * The first one takes no arguments and provides the most simple
-     * way to create object instance. The another one takes one
-     * argument, which is the primary key of the corresponding table.
-     */
-
-
-    public ProgramSlot() {
-        
-    }
-/** 
+    }  
+ 
+    /** 
      * Get- and Set-methods for persistent variables. The default
      * behavior does not make any checks against malformed data,
      * so these might require some manual additions.
@@ -102,6 +106,12 @@ public class ProgramSlot implements Cloneable, Serializable{
     public void setProducer(String producer) {
         this.producer = producer;
     }
+    
+    /**
+     * toString will return String object representing the state of this 
+     * valueObject. This is useful during application development, and 
+     * possibly when application is writing object states in text log.
+     */
 
     @Override
     public String toString() {
