@@ -60,6 +60,7 @@ public class UserDaoImpl implements UserDao {
 		User valueObject = createValueObject();
 		valueObject.setId(id);
 		load(valueObject);
+                System.out.println(valueObject.toString());
 		return valueObject;
 	}
 
@@ -377,6 +378,7 @@ public class UserDaoImpl implements UserDao {
 				valueObject.setPassword(result.getString("password"));
 				valueObject.setName(result.getString("name"));
 				valueObject.setRoles(createRoles(result.getString("role")));
+                                System.out.println("User roles are "+ valueObject.getRoles().get(0).getRole());
 				//Role e = new Role(result.getString("role"));
 				//ArrayList<Role> roles = new ArrayList<Role>();
 				//roles.add(e);

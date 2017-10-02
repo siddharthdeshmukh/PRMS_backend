@@ -48,7 +48,7 @@ Connection connection;
 	}
     @Override
     public void updateUser(AnnualSchedule valueObject) throws NotFoundException, SQLException {
-       String sql = "UPDATE `annual-schedule` SET `assignedBy`= NULL WHERE (`assignedBy` = ?); ";
+       String sql = "UPDATE `annual-schedule` SET `assingedBy`= NULL WHERE (`assingedBy` = ?); ";
 		PreparedStatement stmt = null;
 		openConnection();
 		try {

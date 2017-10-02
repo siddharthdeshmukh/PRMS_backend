@@ -2,6 +2,7 @@ package sg.edu.nus.iss.phoenix.authenticate.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User Value Object. This class is value object representing database table
@@ -159,4 +160,16 @@ public class User implements Cloneable, Serializable {
 		return cloned;
 	}
 
+        public String getRolesForUser(){
+            StringBuffer roleBuffer = new StringBuffer();
+            List<Role> tempRoleList = new ArrayList<>(this.roles);
+        for(Role role:tempRoleList){
+           roleBuffer.append(role.getRole());
+           roles.remove(role);
+           if(roles.size()>=1){
+              roleBuffer.append(":"); 
+           }
+        }
+            return roleBuffer.toString();
+        }
 }
