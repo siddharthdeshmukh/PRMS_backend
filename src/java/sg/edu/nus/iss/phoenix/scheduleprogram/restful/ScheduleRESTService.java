@@ -112,5 +112,6 @@ public class ScheduleRESTService {
         RadioProgram radioProgram=new RadioProgram();
         radioProgram.setName(name);
         ps.setRadioProgram(radioProgram);
+        service.deteleProgramSlot(ps);
     }
 }
