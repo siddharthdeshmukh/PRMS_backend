@@ -16,12 +16,26 @@ import java.util.List;
  */
 public class WeeklySchedule implements Cloneable,Serializable{
 
+    /** 
+     * Persistent Instance variables. This data is directly 
+     * mapped to the columns of database table.
+     */
     private static final long serialVersionUID = 1L;
     
     private String weekNo;
     private Date startDate;
     private String assignedBy;
     private List<ProgramSlot> programSlotList;
+    
+    /** 
+     * Constructors. 
+     * The first one takes no arguments and provides the most simple
+     * way to create object instance. The another one takes three
+     * argument, which is the primary key of the corresponding table.
+     */
+    
+    public WeeklySchedule() {
+    }
 
     public WeeklySchedule(String weekNo, Date startDate, String assignedBy) {
         this.weekNo = weekNo;
@@ -29,10 +43,13 @@ public class WeeklySchedule implements Cloneable,Serializable{
         this.assignedBy = assignedBy;
         this.programSlotList= new ArrayList<>();
     }
-
-    public WeeklySchedule() {
-    }
     
+    /** 
+     * Get- and Set-methods for persistent variables. The default
+     * behavior does not make any checks against malformed data,
+     * so these might require some manual additions.
+     * @return 
+     */
 
     public String getWeekNo() {
         return weekNo;
@@ -57,6 +74,15 @@ public class WeeklySchedule implements Cloneable,Serializable{
     public void setAssignedBy(String assignedBy) {
         this.assignedBy = assignedBy;
     }
+    
+    /**
+     * Clone will return identical deep copy of this valueObject.
+     * Note, that this method is different than the clone() which
+     * is defined in java.lang.Object. Here, the returned cloned object
+     * will also have all its attributes cloned.
+     * @return 
+     * @throws java.lang.CloneNotSupportedException 
+     */
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
