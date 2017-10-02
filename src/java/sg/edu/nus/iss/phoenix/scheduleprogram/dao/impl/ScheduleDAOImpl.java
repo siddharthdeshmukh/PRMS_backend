@@ -179,8 +179,8 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
                         stmt.setString(3, valueObject.getProducer());
                         stmt.setInt(4, valueObject.getDuration());
                         stmt.setDate(5, new java.sql.Date(valueObject.getDateOfProgram().getTime()));
-                        stmt.setTime(6, valueObject.getStartTime());
-                        stmt.setInt(7, valueObject.getId());
+                        stmt.setInt(6, valueObject.getId());
+                       // stmt.setInt(7, valueObject.getId());
 
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount == 0) {
