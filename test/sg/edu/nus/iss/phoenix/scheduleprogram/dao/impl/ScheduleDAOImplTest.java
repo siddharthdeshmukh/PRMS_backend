@@ -29,6 +29,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.api.easymock.PowerMock;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
 /**
  *
@@ -39,10 +40,11 @@ public class ScheduleDAOImplTest {
     ScheduleDAOImpl instance;
     ProgramSlot valueObject;
     
+    RadioProgram rp;
     String name ;
     Date progdate;
-    Date startTime;
-    Time duration;
+    Time startTime;
+    int duration;
     
   @InjectMocks private ScheduleDAOImpl instanceSchDAO;
   @Mock private Connection mockConnection;
@@ -67,10 +69,11 @@ public class ScheduleDAOImplTest {
         instance = new ScheduleDAOImpl();
         name = "testName";
         progdate = new Date(System.currentTimeMillis());
-        startTime = new Date(System.currentTimeMillis());
-        duration = new Time(System.currentTimeMillis());
+        startTime = new Time(System.currentTimeMillis());
+        duration = 30;
+        rp = new RadioProgram();
         valueObject = new ProgramSlot();
-        valueObject.setAll(duration, progdate, startTime, name);
+        valueObject.setAll(duration, progdate, startTime, rp,"presenter","producer");
     }
     
     @After
@@ -97,10 +100,9 @@ public class ScheduleDAOImplTest {
                 .addMockedMethod("load", ProgramSlot.class).createMock(); 
         String name = "testName";
         Date progdate = new Date(System.currentTimeMillis());
-        Time duration = new Time(System.currentTimeMillis());
+        int duration = 35;
        
         ProgramSlot result = testObject.getObject(name, progdate, duration);
-        assertEquals(name, result.getProgamName());
         assertEquals(progdate, result.getDateOfProgram());
         assertEquals(duration, result.getDuration());
 

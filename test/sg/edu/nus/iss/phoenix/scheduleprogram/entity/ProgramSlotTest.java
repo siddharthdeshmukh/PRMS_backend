@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
 /**
  *
@@ -34,7 +35,7 @@ public class ProgramSlotTest {
     
     @Before
     public void setUp() {
-        instance = new ProgramSlot(null, new Date(), new Date(), "test");
+        instance = new ProgramSlot(30, new Date(), new Time(System.currentTimeMillis()),new RadioProgram(), "pres","prod");
     }
     
     @After
@@ -53,7 +54,7 @@ public class ProgramSlotTest {
         Date Starttime = null;
         String progamName = "";
         ProgramSlot instance = new ProgramSlot();
-        instance.setAll(Duration, DateOfProgram, Starttime, progamName);
+        instance.setAll(30, new Date(), new Time(System.currentTimeMillis()),new RadioProgram(), "pres","prod");
     }
 
     /**
@@ -63,8 +64,8 @@ public class ProgramSlotTest {
     public void testGetDuration() {
         System.out.println("getDuration");
         ProgramSlot instance = new ProgramSlot();
-        Time expResult = null;
-        Time result = instance.getDuration();
+        int expResult = 0;
+        int result = instance.getDuration();
         assertEquals(expResult, result);
 
     }
@@ -75,7 +76,7 @@ public class ProgramSlotTest {
     @Test
     public void testSetDuration() {
         System.out.println("setDuration");
-        Time duration = new Time(new Date().getTime());
+        int duration = 20;
         instance.setDuration(duration);
         assertEquals(instance.getDuration(),duration);
         
@@ -108,8 +109,9 @@ public class ProgramSlotTest {
     @Test
     public void testGetStarttime() {
         System.out.println("getStarttime");
-        Date expResult = new Date();
-        Date result = instance.getStarttime();
+        Time expResult = new Time(System.currentTimeMillis());
+        instance.setStartTime(expResult);
+        Time result = instance.getStartTime();
         assertEquals(expResult, result);
     }
 
@@ -119,29 +121,8 @@ public class ProgramSlotTest {
     @Test
     public void testSetStarttime() {
         System.out.println("setStarttime");
-        Date Starttime = new Date();
-        instance.setStarttime(Starttime);
-    }
-
-    /**
-     * Test of getProgamName method, of class ProgramSlot.
-     */
-    @Test
-    public void testGetProgamName() {
-        System.out.println("getProgamName");
-        String result = instance.getProgamName();
-        assertEquals("test", result);
-    }
-
-    /**
-     * Test of setProgamName method, of class ProgramSlot.
-     */
-    @Test
-    public void testSetProgamName() {
-        System.out.println("setProgamName");
-        String progamName = "test";
-        instance.setProgamName(progamName);
-        assertEquals(progamName,instance.getProgamName());
+        Time Starttime = new Time(System.currentTimeMillis());
+        instance.setStartTime(Starttime);
     }
     
 }
