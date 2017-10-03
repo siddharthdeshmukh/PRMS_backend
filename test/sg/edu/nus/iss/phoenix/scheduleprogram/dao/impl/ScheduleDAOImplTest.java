@@ -8,9 +8,7 @@ package sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.Time;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,12 +21,9 @@ import org.easymock.EasyMock;
 import org.easymock.Mock;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.easymock.PowerMock;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
 /**
@@ -92,6 +87,7 @@ public class ScheduleDAOImplTest {
 
     /**
      * Test of getObject method, of class ScheduleDAOImpl.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetObject() throws Exception {

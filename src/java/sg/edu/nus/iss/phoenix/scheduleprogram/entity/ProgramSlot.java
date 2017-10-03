@@ -126,6 +126,10 @@ public class ProgramSlot implements Cloneable, Serializable{
     public void setId(int id) {
         this.id = id;
     }
+
+    
+
+    
     
     
     /**
@@ -134,9 +138,9 @@ public class ProgramSlot implements Cloneable, Serializable{
      * possibly when application is writing object states in text log.
      */
 
-    @Override
+   @Override
     public String toString() {
-        return "ProgramSlot{" + "duration=" + duration + ", dateOfProgram=" + dateOfProgram + ", startTime=" + startTime + ", radioProgram=" + radioProgram + ", presenter=" + presenter + ", producer=" + producer + '}';
+        return "ProgramSlot{" + "id=" + id + ", duration=" + duration + ", dateOfProgram=" + dateOfProgram + ", startTime=" + startTime + ", radioProgram=" + radioProgram + ", presenter=" + presenter + ", producer=" + producer + '}';
     }
   
 }
