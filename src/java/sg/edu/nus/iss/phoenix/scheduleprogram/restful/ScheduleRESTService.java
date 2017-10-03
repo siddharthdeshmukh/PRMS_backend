@@ -95,7 +95,8 @@ public class ScheduleRESTService {
         }
         return spList;
     }
-    
+    /*@DELETE method for deleting the program slot
+    @PathParam for extracting URI of the resource*/
     @DELETE
     @Path("/delete/{programName}/{dateOfProgram}/{startTime}")
     @Consumes(MediaType.APPLICATION_JSON)
