@@ -74,7 +74,7 @@ public class AuthenticateService {
 		} catch (SQLException ex) {
 			logger.log(Level.SEVERE, "user searchMatching", ex);
 		}
-
+                System.out.println("User retruneed to seervice " + found.toString());
 		return (found);
 	}
 

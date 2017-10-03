@@ -51,8 +51,10 @@ public class AuthenticateRESTService {
             @QueryParam("password") String pwd){
         AuthInfo response = new AuthInfo();
         response.setUsername(uname);
-        if(checkCredentials(uname, pwd)){
+        User user = checkCredentials(uname, pwd);
+        if(user!=null){
                 response.setAuthStatus(true);
+                response.setRole(user.getRolesForUser());
         }else{
                 response.setAuthStatus(false);	
         }
@@ -66,7 +68,7 @@ public class AuthenticateRESTService {
      * @param pwd
      * @return
      */
-    private boolean checkCredentials(String uname, String pwd){
+    private User checkCredentials(String uname, String pwd){
         System.out.println("Inside checkCredentials");
         User user = new User();
         user.setId(uname);
@@ -74,10 +76,10 @@ public class AuthenticateRESTService {
         user = service.validateUserIdPassword(user);
         if (null != user) {
             System.out.println("Login Sucess!");
-                    return true;
+                    return user;
         } else {
             System.out.println("Login Failed - Wrong username/password!");
-            return false;
+            return null;
         }
     }
     

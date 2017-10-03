@@ -37,11 +37,17 @@ public class PresenterProducerRESTService {
     private UriInfo context;
     
     private PresenterProducerService service;
-       
+        /**
+     * Creates a new instance of PresenterProducerService
+     */
     public PresenterProducerRESTService() {
         service = new PresenterProducerService();
     }
     
+    /**
+     * Retrieves representation of an instance of resource
+     * @return an instance of presenters
+     */
     @GET
     @Path("/presenter/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,7 +57,10 @@ public class PresenterProducerRESTService {
         presenterList.setPresenterList(presenterListFromService);
         return presenterList;
     }
-    
+     /**
+     * Retrieves representation of an instance of resource
+     * @return an instance of producers
+     */
     @GET
     @Path("/producer/all")
     @Produces(MediaType.APPLICATION_JSON)

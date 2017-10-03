@@ -22,7 +22,12 @@ public class Presenter implements Cloneable, Serializable {
             this.id = idIn;
             this.name = nameIn;
 	}
-
+/** 
+     * Get- and Set-methods for persistent variables. The default
+     * behavior does not make any checks against malformed data,
+     * so these might require some manual additions.
+     * @return 
+     */
     public String getId() {
         return id;
     }

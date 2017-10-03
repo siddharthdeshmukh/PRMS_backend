@@ -6,17 +6,27 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.scheduleprogram.dao.AnnualScheduleDAO;
+import sg.edu.nus.iss.phoenix.scheduleprogram.dao.ScheduleProgramDAO;
+import sg.edu.nus.iss.phoenix.scheduleprogram.dao.WeeklyScheduleDAO;
+import sg.edu.nus.iss.phoenix.scheduleprogram.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.scheduleprogram.entity.WeeklySchedule;
 
 public class UserService {
 	DAOFactoryImpl factory;
 	   UserDao userdao;
-
+        WeeklyScheduleDAO weeklyScheduleDAO;
+        AnnualScheduleDAO andao;
+        ScheduleProgramDAO spDao; 
 	public UserService() {
 		super();
 		// Sorry. This implementation is wrong. To be fixed.
 		factory = new DAOFactoryImpl();
 		userdao = factory.getUserDAO();
+                weeklyScheduleDAO=factory.getWeeklyScheduleDAO();
+                spDao =factory.getSpdao();
+                andao =factory.getAnnualScheduleDAO();
 	}
 	public ArrayList<User> searchUser(User user) {
 		ArrayList<User> list = new ArrayList<User>();
@@ -43,7 +53,7 @@ public class UserService {
 
 	}
 
-	public User findRP(String username) {
+	public User findUser(String username) {
 		User currentUser = new User();
 		currentUser.setName(username);
 		try {
@@ -72,23 +82,23 @@ public class UserService {
         
 	public void processCreate(User user) {
 		try {
-			userdao.create(user);
+                    userdao.create(user);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+                    e.printStackTrace();
 		}
 	}
 
 	public void processModify(User user) {
 		
 			try {
-				userdao.save(user);
+                            userdao.save(user);
 			} catch (NotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+                            e.printStackTrace();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+                            e.printStackTrace();
 			}
 		
 	}
@@ -97,6 +107,16 @@ public class UserService {
 
             try {
                 User user = new User(name);
+                AnnualSchedule anSchedule = new AnnualSchedule();
+                anSchedule.setAssignedBy(name);
+                WeeklySchedule wkSchedule = new WeeklySchedule();
+                wkSchedule.setAssignedBy(name);
+                ProgramSlot ps = new ProgramSlot();
+                ps.setPresenter(name);
+                ps.setProducer(name);
+                andao.updateUser(anSchedule);
+                weeklyScheduleDAO.updateUser(wkSchedule);
+                spDao.updatePresenterProducer(ps);
                 userdao.delete(user);
             } catch (NotFoundException e) {
                 // TODO Auto-generated catch block
