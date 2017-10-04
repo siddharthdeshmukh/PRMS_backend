@@ -91,19 +91,21 @@ public class ScheduleRESTService {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseStatus updateProgramSlot(ProgramSlot ps) {
+    public Response updateProgramSlot(ProgramSlot ps) {
         ResponseStatus response;
-        
+        Response.Status  status=null;
         
            boolean modified= service.processModify(ps);
            if(modified) {
            response= new ResponseStatus("201", "Program slot modified Successfuly");
+           status = Response.Status.CREATED;
            }
            else {
                response= new ResponseStatus("500", "Program slot already exists");
+                status = Response.Status.CONFLICT;
            }
        
-        return response;
+        return Response.status(status).type(MediaType.APPLICATION_JSON).build();
     }
     
     /**
