@@ -38,40 +38,41 @@ public class ScheduleService {
                 weeklyScheduleDAO=factory.getWeeklyScheduleDAO();
 	}
         
-        public void processCreate(ProgramSlot ps) {
+        public boolean processCreate(ProgramSlot ps) {
+            boolean created = true;
 		try {
                     WeeklySchedule weeklySch= weeklyScheduleDAO.createValueObject();
                     weeklySch.setWeekNo(getWeekNumber(ps));
                     weeklySch.setStartDate(ps.getDateOfProgram()); // setting Date same as Program Start Date, it will be updated in WeeklyScheduleDAO
-		if(!checkProgramSlotOverlap(ps, weeklySch))
+		if(!checkProgramSlotOverlap(ps, weeklySch)){
                     spdao.create(ps);
-		} catch (OverLapException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (NotFoundException e){
-                    e.printStackTrace();
-                }catch (SQLException e){
+                }else {
+                    created = false;
+                }
+		} catch (NotFoundException | SQLException e){
                     e.printStackTrace();
                 }
+                return created;
 	}
         
         
-        public void processModify(ProgramSlot ps) {
-		
+        public boolean processModify(ProgramSlot ps) {
+		boolean modified = true;
 		try {
                     WeeklySchedule weeklySch= weeklyScheduleDAO.createValueObject();
                     weeklySch.setWeekNo(getWeekNumber(ps));
                     weeklySch.setStartDate(ps.getDateOfProgram()); // setting Date same as Program Start Date, it will be updated in WeeklyScheduleDAO
-                    if(!checkProgramSlotOverlap(ps, weeklySch))
+                    if(!checkProgramSlotOverlap(ps, weeklySch)){
                         spdao.save(ps);
-		} catch (OverLapException e) {
-		    e.printStackTrace();
-		}catch (NotFoundException e){
+                    }else {
+                        modified = false;
+                    }
+		} catch (NotFoundException e){
                     e.printStackTrace();
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
-		
+		return modified;
 	}
         
         public ArrayList<ProgramSlot> findAllSP() {
@@ -87,22 +88,23 @@ public class ScheduleService {
 
         }
         
-        protected boolean checkProgramSlotOverlap(ProgramSlot programSlot,WeeklySchedule weeklySch) throws NotFoundException, SQLException,OverLapException{
+        protected boolean checkProgramSlotOverlap(ProgramSlot programSlot,WeeklySchedule weeklySch) throws NotFoundException, SQLException{
          weeklySch=  weeklyScheduleDAO.getWeeklySchedule(weeklySch);
+         System.out.println("Week start date is" + weeklySch.getStartDate() );
          Date startDate = new Date(weeklySch.getStartDate().getTime());
          List<ProgramSlot> programSlotForWeek = spdao.loadAllProgramSlotForWeek(startDate);
          for(ProgramSlot ps:programSlotForWeek){
-             
-            System.out.println("comapre result is "+ convertDate(programSlot.getDateOfProgram()).compareTo(ps.getDateOfProgram()));
+             System.out.println("program slot is "+ programSlotForWeek.size()+ " "+ ps.toString());
+            System.out.println("comapre result for Date " + convertDate(programSlot.getDateOfProgram())+ " and " + ps.getDateOfProgram()+ " "+  convertDate(programSlot.getDateOfProgram()).compareTo(ps.getDateOfProgram()));
              if(convertDate(programSlot.getDateOfProgram()).compareTo(ps.getDateOfProgram())==0){
                 System.out.println("Called for Date "+ ps.getDateOfProgram());
                 if(programSlot.getStartTime().compareTo(ps.getStartTime())==0){
-                   // Date of Program and Start Time already Present for the Week, throw OverlapException
-                throw new OverLapException("Program Slot already assigned to Other Program"); 
+                   System.out.println("Date of Program and Start Time already Present for the Week, throw OverlapException");
+                return true;
                 }
                 java.util.Date endTime = getEndTime(ps);
                 if(programSlot.getStartTime().after(ps.getStartTime()) && programSlot.getStartTime().before(endTime)){
-                    throw new OverLapException("Program Slot already assigned to Other Program"); 
+                    return true;
                 }
                 
             } 
@@ -115,6 +117,7 @@ public class ScheduleService {
             System.out.println(ps.toString());
         cal.setTime(ps.getDateOfProgram());
         int weekNo = cal.get(Calendar.WEEK_OF_YEAR);
+            System.out.println("week no is "+ weekNo);
         return Integer.toString(weekNo);
         }
       protected java.util.Date getEndTime(ProgramSlot ps){

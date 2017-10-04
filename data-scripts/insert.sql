@@ -88,10 +88,10 @@ insert into `phoenix`.`weekly-schedule` values("37",'2017-09-11 00:00:00', "poin
 insert into `phoenix`.`weekly-schedule` values("38",'2017-09-18 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("39",'2017-09-25 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("40",'2017-10-02 00:00:00', "pointyhead");
-insert into `phoenix`.`weekly-schedule` values("41",'2017-10-07 00:00:00', "pointyhead");
-insert into `phoenix`.`weekly-schedule` values("42",'2017-10-14 00:00:00', "pointyhead");
-insert into `phoenix`.`weekly-schedule` values("43",'2017-10-21 00:00:00', "pointyhead");
-insert into `phoenix`.`weekly-schedule` values("44",'2017-10-28 00:00:00', "pointyhead");
+insert into `phoenix`.`weekly-schedule` values("41",'2017-10-09 00:00:00', "pointyhead");
+insert into `phoenix`.`weekly-schedule` values("42",'2017-10-16 00:00:00', "pointyhead");
+insert into `phoenix`.`weekly-schedule` values("43",'2017-10-23 00:00:00', "pointyhead");
+insert into `phoenix`.`weekly-schedule` values("44",'2017-10-30 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("45",'2017-11-06 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("46",'2017-11-13 00:00:00', "pointyhead");
 insert into `phoenix`.`weekly-schedule` values("47",'2017-11-20 00:00:00', "pointyhead");

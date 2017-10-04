@@ -6,6 +6,7 @@
 package sg.edu.nus.iss.phoenix.scheduleprogram.entity;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -90,7 +91,10 @@ public class ProgramSlotTest {
         System.out.println("getDateOfProgram");
         Date expResult = new Date();
         Date result = instance.getDateOfProgram();
-        assertEquals(expResult, result);
+        SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String resultDate = sdf.format(result);
+        String expDate = sdf.format(expResult);
+        assertEquals(expDate, resultDate);
     }
 
     /**

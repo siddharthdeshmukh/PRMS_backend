@@ -341,7 +341,7 @@ public class ScheduleDAOImpl implements ScheduleProgramDAO{
     public List<ProgramSlot> loadAllProgramSlotForWeek(Date weekStartDate) throws SQLException {
                 Calendar cal =Calendar.getInstance();
                 cal.setTime(weekStartDate);
-                cal.add(Calendar.DAY_OF_YEAR, 6);
+                cal.add(Calendar.DAY_OF_YEAR, 7);
                 
                 Date weekEndDate= new Date(cal.getTime().getTime());
                 openConnection();

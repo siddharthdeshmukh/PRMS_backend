@@ -5,12 +5,8 @@
  */
 package sg.edu.nus.iss.phoenix.scheduleprogram.dao.impl;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.Time;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,22 +16,17 @@ import static org.junit.Assert.*;
 import sg.edu.nus.iss.phoenix.scheduleprogram.entity.ProgramSlot;
 
 import org.easymock.EasyMock;
-import org.easymock.Mock;
+import org.easymock.EasyMockRunner;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+//import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.easymock.PowerMock;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 
 /**
  *
  * @author e0146956
  */
-@RunWith(PowerMockRunner.class)
+@RunWith(EasyMockRunner.class)
 public class ScheduleDAOImplTest {
     ScheduleDAOImpl instance;
     ProgramSlot valueObject;
@@ -46,9 +37,9 @@ public class ScheduleDAOImplTest {
     Time startTime;
     int duration;
     
-  @InjectMocks private ScheduleDAOImpl instanceSchDAO;
-  @Mock private Connection mockConnection;
-  @Mock private PreparedStatement mockStatement;
+//  /*@Mock private ScheduleDAOImpl instanceSchDAO;
+//  @Mock private Connection mockConnection;
+//  @Mock private PreparedStatement mockStatement;*/
 
     
     public ScheduleDAOImplTest() {
@@ -64,7 +55,7 @@ public class ScheduleDAOImplTest {
     
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        //MockitoAnnotations.initMocks(this);
 
         instance = new ScheduleDAOImpl();
         name = "testName";
